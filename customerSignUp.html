@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Baked Sisig</title>
+</head>
+<body>
+    <br><br>
+    <nav>
+        <ul class="navigationBar">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="login.html">Log-in</a></li>
+            <li><a href="signup.html">Sign-up</a></li>
+        </ul>
+    </nav>
+    <br>
+    <div class="detailsContainer">
+        <form id="customerSignUpForm">
+            <label for="firstname"><b>First Name</b></label>
+            <br>
+            <input type="text" placeholder="e.g. John" id="firstname" name="firstname" required>
+            <br><br>
+            <label for="surname"><b>Surname</b></label>
+            <br>
+            <input type="text" placeholder="e.g. Legend" id="surname" name="surname" required>
+            <br><br>
+            <label for="email"><b>E-mail address</b></label>
+            <br>
+            <input type="text" placeholder="e.g. johnlegend1@gmail.com" id="email" name="email" required>
+            <br><br>
+            <label for="contactNo"><b>Contact Number</b></label>
+            <br>
+            <input type="text" placeholder="e.g. 09161234567" id="contactNo" name="contactNo" required>
+            <br><br>
+            <label for="address"><b>Complete Address</b></label>
+            <br>
+            <input type="text" placeholder="Complete Address" id="address" name="address" required>
+            <br><br>
+            <label for="password"><b>Password</b></label>
+            <br>
+            <input type="password" placeholder="Password" id="password" name="password" required>
+            <br><br>
+            <label for="confirmPassword"><b>Confirm Password</b></label>
+            <br>
+            <input type="password" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required>
+            <br><br>
+            <button type="submit" onclick="customerSignUp()">Complete Sign-up</button>
+            <br><br><br><br>
+        </form>
+    </div>
+</body>
+</html>

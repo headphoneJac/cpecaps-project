@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Baked Sisig</title>
+</head>
+<body>
+    <ul class="navigationBar">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Menu</a></li>
+        <li><a href="#">Log-in</a></li>
+        <li><a href="#">Sign-up</a></li>
+    </ul>
+    <div class="containerCenter">
+        <div class = "row">
+            <div class = "columnForItems">
+                <p id="itemName"></p>
+                    <script>
+                        const itemName = localStorage.getItem("itemName");   
+                        document.getElementById("itemName").textContent = itemName;                       
+                    </script>
+                <img id="itemImage">
+                    <script>
+                        const imageToDisplay = localStorage.getItem("imageToDisplay");
+                        const img = document.getElementById("itemImage");
+                        img.src = imageToDisplay;                    
+                    </script>
+            </div>
+            <div class = "columnForItems" style="margin-top:100px">         
+                <a id="price"></a>
+                    <script>
+                        const itemPrice = localStorage.getItem("itemPrice");    
+                        document.getElementById("price").textContent = "PhP " + itemPrice;                        
+                    </script>
+                <button class="styleButton circleButton" onclick="subPrice()">-</button>
+                <a id="amount">1</a>
+                <button class="styleButton circleButton" onclick="addPrice()">+</button>
+                <br><br>
+                <button class="styleButton boxButton"> Add to my Order</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
