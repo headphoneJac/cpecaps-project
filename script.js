@@ -152,9 +152,13 @@ function subPrice(){
     } 
     var amount = document.getElementById('amount');
     var currAmount = parseInt(amount.innerHTML);
-    var newAmount = currAmount - 1;    
-    amount.innerHTML =  newAmount;
+    var newAmount = currAmount - 1;  
     var newPrice = price * newAmount;
+    if(newAmount<0){
+        newAmount = 0;
+        newPrice = 0;
+    }  
+    amount.innerHTML =  newAmount;    
     document.getElementById('price').innerHTML = "PhP " + newPrice.toFixed(2);
 }
 
