@@ -24,23 +24,64 @@
         </div>
         <br><br>
         <div class="detailsContainer">
-            <form id="login-form">
-                <label for="email"><b>E-mail address</b></label>
-                <br>
-                <input type="text" placeholder="Enter e-mail address" id="email" name="email" required>
-                <br><br>
-                <label for="password"><b>Password</b></label>
-                <br>
-                <input type="password" placeholder="Enter Password" id="password" name="password" required>
-                <br><br>
-                <button type="submit" onclick="login()">Login</button>
-                <br><br><br><br>
-            </form>
+            <label for="email"><b>E-mail address</b></label>
+            <br>
+            <input type="text" placeholder="Enter e-mail address" id="email">
+            <br><br>
+            <label for="password"><b>Password</b></label>
+            <br>
+            <input type="password" placeholder="Enter Password" id="password">
+            <br><br>
+            <button id="login">Login</button>
+            <br><br><br><br>
         </div>
     </div>
 </body>
-<script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js"></script>
-<script src="login-signup.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+    login.addEventListener('click', (e) => {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+
+            alert('Logged in successfully!');
+            window.location.replace('homeCustomer.html');
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            
+            alert(errorMessage);
+        });
+    })
+</script>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
     <title>Baked Sisig</title>
 </head>
 <body>
@@ -29,7 +29,7 @@
         <br><br>
         <label for="email"><b>E-mail address</b></label>
         <br>
-        <input type="email" placeholder="e.g. johnlegend1@gmail.com" id="email">
+        <input type="text" placeholder="e.g. johnlegend1@gmail.com" id="email">
         <br><br>
         <label for="contactNo"><b>Contact Number</b></label>
         <br>
@@ -90,13 +90,15 @@
             // Signed in 
             const user = userCredential.user;
 
+            const dt = new Date();
+
             set(ref(database, 'users/' + user.uid), {
                 email : email,
                 firstname : firstname,
                 surname : surname,
                 address : address,
                 contactNo : contactNo,
-                lastLogin : Date.now()
+                lastLogin : dt
             })
 
             alert('User created');
