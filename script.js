@@ -1,3 +1,8 @@
+function loginAlert() {
+    alert("Hello! Please login first!");
+    window.location.href = "login.html";
+  }
+
 class menuItem {
     constructor(name, price, image) {
       this.name = name;
