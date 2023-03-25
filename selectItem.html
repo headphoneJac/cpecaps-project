@@ -44,9 +44,92 @@
                 <a id="amount">1</a>
                 <button class="styleButton circleButton" onclick="addPrice()">+</button>
                 <br><br>
-                <button class="styleButton boxButton"> Add to my Order</button>
+                <button id = "addOrders" class="styleButton boxButton"> Add to my Order</button>
             </div>
         </div>
     </div>
 </body>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, ref, set , child, push, update} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const db = getDatabase();
+
+    addOrders.addEventListener('click', (e) => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userId = user.uid;
+                switch(document.getElementById("itemName").innerHTML){
+                case "Mango Sticky Rice":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        mangoStickyRice: document.getElementById("amount").textContent               
+                    })
+                    break;
+                case "Sisig ala Carte":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        sisigAlaCarte: document.getElementById("amount").textContent                   
+                    })
+                    break;
+                case "Baked Sisig ala Carte":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        bakedSisigAlaCarte: document.getElementById("amount").textContent                   
+                    })
+                    break;
+                case "Mango Sticky Rice Party":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        mangoStickyRiceParty: document.getElementById("amount").textContent                   
+                    })
+                    break;
+                case "Sisig ala Carte Party":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        sisigAlaCarteParty: document.getElementById("amount").textContent                   
+                    })
+                    break;
+                case "Baked Sisig ala Carte Party":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        bakedSisigParty: document.getElementById("amount").textContent                   
+                    })
+                    break;
+                case "Bundle A":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        bundleA: document.getElementById("amount").textContent                   
+                    })
+                    break;
+                case "Bundle B":
+                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                        bundleB: document.getElementById("amount").textContent                   
+                    })
+                    break;       
+                }        
+                alert("added order!");        
+            } 
+            else {
+                // User is signed out
+                // ...
+            }
+        });
+    })
+</script>
 </html>

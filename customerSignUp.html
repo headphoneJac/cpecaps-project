@@ -100,7 +100,16 @@
                 contactNo : contactNo,
                 lastLogin : dt
             })
-
+            set(ref(database, 'users/' + user.uid + '/itemMenus'), {
+            mangoStickyRice: '0',
+            sisigAlaCarte: '0',
+            bakedSisigAlaCarte : '0',
+            mangoStickyRiceParty : '0',
+            sisigAlaCarteParty : '0',
+            bakedSisigParty : '0',
+            bundleA : '0',
+            bundleB : '0'
+        })
             alert('User created');
             // ...
         })
