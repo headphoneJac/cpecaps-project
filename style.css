@@ -197,10 +197,114 @@ button.customerSignUp, button.adminSignUp {
     width: 1086px;
     height: 100px;
     top: 220px;
+    font-family: sans-serif;
    /* position:fixed;*/
 
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
    
+}
+
+.prod-img{
+    width: 100px;
+}
+.row-products{
+    display: flex;
+}
+
+.column {
+    float: left;
+    
+}
+
+.image{
+    width: 150px;
+}
+
+.price{
+    width: 160px;
+}
+.name{
+    width: 220px;
+}
+.minus{
+    width: 20px;
+}
+.number{
+    width: 100px;
+    text-align: center;
+    
+}
+.plus{
+    width: 20px;
+}
+.delete{
+    width: 100px;
+    align-items:  right;
+}
+
+.row-products:after{
+    content:"";
+    display: table;
+    clear: both;
+}
+
+.minus-btn{
+    border-radius: 50px;
+    background-color:grey;
+    text-align: center;
+    
+}
+
+.plus-btn{
+    border-radius: 50px;
+    background-color:grey;
+    text-align: center;
+}
+
+.name-container{
+    position: absolute;
+    left: 50%;
+    transform: translate(-90%, 0);
+    top: 200px; 
+}
+.row-names{
+    display: flex;
+    
+}
+
+.name-col{
+    float: left;
+}
+
+.blank{
+    width:150px;
+}
+
+.total-price{
+    width:190px;
+}
+
+
+.order-name{
+    width: 245px;
+}
+
+/*.blank-1{
+    width:20px;
+}*/
+
+.quantity{
+    width: 5px;
+}
+
+/*.blank-2{
+    width:20px;
+}*/
+
+.row-names:after{
+    content:"";
+    display: table;
+    clear: both;
 }
