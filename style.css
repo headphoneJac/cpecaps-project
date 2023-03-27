@@ -200,6 +200,8 @@ button.customerSignUp, button.adminSignUp {
     font-family: sans-serif;
    /* position:fixed;*/
 
+
+
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
@@ -263,6 +265,11 @@ button.customerSignUp, button.adminSignUp {
     text-align: center;
 }
 
+.prod-del{
+    width: 50px;
+  
+}
+
 .name-container{
     position: absolute;
     left: 50%;
@@ -307,4 +314,6 @@ button.customerSignUp, button.adminSignUp {
     content:"";
     display: table;
     clear: both;
+
+    
 }

@@ -174,3 +174,40 @@ function addOrder(){
     var order_name = document.getElementById('itemName');
     
 }
+
+document.addEventListener('click', function(e){
+    id_button_clicked = e.target.id;
+    class_button_clicked = e.target.className;
+
+    
+
+
+    if (id_button_clicked == 'plus-btn'){
+        console.log('add');
+    }
+
+    else if (id_button_clicked == 'minus-btn'){
+        console.log('minus');
+    }
+})
+
+function addQty(){
+
+    let current_quantity = document.getElementById('quantity');
+    
+    current_quantity = Number(current_quantity);
+    current_quantity = current_quantity + 1;
+
+    let p = document.createElement("p");
+    let newQty = document.createTextNode(current_quantity);
+
+    p.appendChild(newQty);
+
+
+
+
+}
+
+function reduceQty(){
+
+}
