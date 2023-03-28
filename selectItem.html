@@ -53,7 +53,7 @@
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-    import { getDatabase, ref, set , child, push, update} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getDatabase, ref, set , child, push, update, get} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
     import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -76,54 +76,102 @@
     const database = getDatabase(app);
     const auth = getAuth();
     const db = getDatabase();
-
+    const amountText = parseInt(document.getElementById("amount").textContent);
     addOrders.addEventListener('click', (e) => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const userId = user.uid;
+                var num1 = document.getElementById("amount").value;
                 switch(document.getElementById("itemName").innerHTML){
-                case "Mango Sticky Rice":
+                case "Mango Sticky Rice": //based on the name of the item menu, amount will be changed with its corresponding amount for the itemS
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        mangoStickyRice: document.getElementById("amount").textContent               
+                        mangoStickyRice: parseInt(document.getElementById("amount").textContent)
                     })
                     break;
                 case "Sisig ala Carte":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        sisigAlaCarte: document.getElementById("amount").textContent                   
+                        sisigAlaCarte: parseInt(document.getElementById("amount").textContent)                
                     })
                     break;
                 case "Baked Sisig ala Carte":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        bakedSisigAlaCarte: document.getElementById("amount").textContent                   
+                        bakedSisigAlaCarte: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;
                 case "Mango Sticky Rice Party":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        mangoStickyRiceParty: document.getElementById("amount").textContent                   
+                        mangoStickyRiceParty: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;
                 case "Sisig ala Carte Party":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        sisigAlaCarteParty: document.getElementById("amount").textContent                   
+                        sisigAlaCarteParty: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;
                 case "Baked Sisig ala Carte Party":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        bakedSisigParty: document.getElementById("amount").textContent                   
+                        bakedSisigParty: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;
                 case "Bundle A":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        bundleA: document.getElementById("amount").textContent                   
+                        bundleA: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;
                 case "Bundle B":
                     update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
-                        bundleB: document.getElementById("amount").textContent                   
+                        bundleB: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;       
-                }        
-                alert("added order!");        
+                }alert('order added!');
+                
+                //total amount                
+                get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/')).then((snapshot) =>{
+                    const data = snapshot.val();
+                    var totalPrice=0;
+                    
+                    for (var itemName in data) {
+                        var amount = data[itemName];
+                        switch(itemName){
+                            case "mangoStickyRice":
+                                var price = 90*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "sisigAlaCarte":
+                                var price = 250*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "bakedSisigAlaCarte":
+                                var price = 300*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "mangoStickyRiceParty":
+                                var price = 250*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "sisigAlaCarteParty":
+                                var price = 700*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "bakedSisigParty":
+                                var price = 1100*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "bundleA":
+                                var price = 1340*amount;
+                                totalPrice = totalPrice + price;
+                                break;
+                            case "bundleB":
+                                var price = 2120*amount;
+                                totalPrice = totalPrice + price;
+                                break;        
+                        }                        
+                    }                    
+                    alert("Total price right now is PhP "+totalPrice);
+                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        totalPrice: totalPrice
+                        })
+                }) 
             } 
             else {
                 // User is signed out

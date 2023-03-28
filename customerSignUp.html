@@ -98,17 +98,18 @@
                 surname : surname,
                 address : address,
                 contactNo : contactNo,
-                userType : "Customer"
+                userType : "Customer",
+                totalPrice: 0
             })
             set(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {
-            mangoStickyRice: '0',
-            sisigAlaCarte: '0',
-            bakedSisigAlaCarte : '0',
-            mangoStickyRiceParty : '0',
-            sisigAlaCarteParty : '0',
-            bakedSisigParty : '0',
-            bundleA : '0',
-            bundleB : '0'
+            mangoStickyRice: 0,
+            sisigAlaCarte: 0,
+            bakedSisigAlaCarte : 0,
+            mangoStickyRiceParty : 0,
+            sisigAlaCarteParty : 0,
+            bakedSisigParty : 0,
+            bundleA : 0,
+            bundleB : 0
         })
             alert('User created');
             // ...
