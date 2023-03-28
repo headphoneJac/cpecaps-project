@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Baked Sisig</title>
+</head>
+<body>
+    <br><br>
+    <nav>
+        <ul class="navigationBar">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="login.html">Log-in</a></li>
+            <li><a href="signup.html">Sign-up</a></li>
+        </ul>
+    </nav>
+    <br>
+    <div class="detailsContainer">
+        <label for="firstname"><b>First Name</b></label>
+        <br>
+        <input type="text" placeholder="e.g. John" id="firstname">
+        <br><br>
+        <label for="surname"><b>Surname</b></label>
+        <br>
+        <input type="text" placeholder="e.g. Legend" id="surname">
+        <br><br>
+        <label for="email"><b>E-mail address</b></label>
+        <br>
+        <input type="text" placeholder="e.g. johnlegend1@gmail.com" id="email">
+        <br><br>
+        <label for="contactNo"><b>Contact Number</b></label>
+        <br>
+        <input type="text" placeholder="e.g. 09161234567" id="contactNo">
+        <br><br>
+        <label for="password"><b>Password</b></label>
+        <br>
+        <input type="password" placeholder="Password (must contain 7 or more characters)" id="password">
+        <br><br>
+        <label for="confirmPassword"><b>Confirm Password</b></label>
+        <br>
+        <input type="password" placeholder="Confirm Password" id="confirmPassword">
+        <br><br>
+        <button id="adminSignUp">Complete Sign-up</button>
+        <br><br><br><br>
+    </div>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+    adminSignUp.addEventListener('click', (e) => {
+        var email = document.getElementById('email').value;
+        var firstname = document.getElementById('firstname').value;
+        var surname = document.getElementById('surname').value;
+        var contactNo = document.getElementById('contactNo').value;
+        var password = document.getElementById('password').value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+
+            const dt = new Date();
+
+            set(ref(database, 'adminUsers/' + user.uid), {
+                email : email,
+                firstname : firstname,
+                surname : surname,
+                contactNo : contactNo,
+                userType : "Admin"
+            })
+            alert('User created');
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            alert(errorMessage);
+            // ..
+        });
+    })
+</script>
+</html>

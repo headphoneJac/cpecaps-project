@@ -92,15 +92,15 @@
 
             const dt = new Date();
 
-            set(ref(database, 'users/' + user.uid), {
+            set(ref(database, 'customerUsers/' + user.uid), {
                 email : email,
                 firstname : firstname,
                 surname : surname,
                 address : address,
                 contactNo : contactNo,
-                lastLogin : dt
+                userType : "Customer"
             })
-            set(ref(database, 'users/' + user.uid + '/itemMenus'), {
+            set(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {
             mangoStickyRice: '0',
             sisigAlaCarte: '0',
             bakedSisigAlaCarte : '0',

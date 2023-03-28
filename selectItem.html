@@ -83,42 +83,42 @@
                 const userId = user.uid;
                 switch(document.getElementById("itemName").innerHTML){
                 case "Mango Sticky Rice":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         mangoStickyRice: document.getElementById("amount").textContent               
                     })
                     break;
                 case "Sisig ala Carte":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         sisigAlaCarte: document.getElementById("amount").textContent                   
                     })
                     break;
                 case "Baked Sisig ala Carte":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         bakedSisigAlaCarte: document.getElementById("amount").textContent                   
                     })
                     break;
                 case "Mango Sticky Rice Party":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         mangoStickyRiceParty: document.getElementById("amount").textContent                   
                     })
                     break;
                 case "Sisig ala Carte Party":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         sisigAlaCarteParty: document.getElementById("amount").textContent                   
                     })
                     break;
                 case "Baked Sisig ala Carte Party":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         bakedSisigParty: document.getElementById("amount").textContent                   
                     })
                     break;
                 case "Bundle A":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         bundleA: document.getElementById("amount").textContent                   
                     })
                     break;
                 case "Bundle B":
-                    update(ref(database, 'users/' + user.uid + '/itemMenus'), {                
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
                         bundleB: document.getElementById("amount").textContent                   
                     })
                     break;       
