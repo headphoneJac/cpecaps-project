@@ -220,30 +220,29 @@ function reduceQty(){
 
     let current_quantity = document.getElementById('quantity');
     
-   current_qty = current_quantity.innerHTML.replace(/\s/g, '');
+    current_qty = current_quantity.innerHTML.replace(/\s/g, '');
 
   
   
     current_qty = Number(current_qty);
 
     
-
-    current_qty--;
-    current_quantity.innerHTML = current_qty;
-    console.log(current_qty);
-    updatePrice(current_qty, '-');
+    if(current_qty != 1){
+        current_qty--;
+        current_quantity.innerHTML = current_qty;
+        console.log(current_qty);
+        updatePrice(current_qty, '-');
+    }
+    
+    
 
 }
 
 
 function updatePrice(quantity, operand){
     let current_price = document.getElementById('view-prod-price');
-    
-    
     curr_price = current_price.innerHTML;
-    
     newCurr = curr_price.split(' ');
-
     newCurr = newCurr.filter((a) => a);
 
     if (newCurr[0] == '\n'){
