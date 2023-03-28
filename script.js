@@ -175,12 +175,11 @@ function addOrder(){
     
 }
 
+
+// VIEW ORDER PAGE
 document.addEventListener('click', function(e){
     id_button_clicked = e.target.id;
     class_button_clicked = e.target.className;
-
-    
-
 
     if (id_button_clicked == 'plus-btn'){
 
@@ -202,15 +201,12 @@ function addQty(){
     current_qty = Number(current_qty);
 
     
+    updatePrice(current_qty, '+');
 
     current_qty++;
     current_quantity.innerHTML = current_qty;
     console.log(current_qty);
-    updatePrice(current_qty, '+');
-
-
-    //UPDATE PRICE TOO
-
+    
 
 }
 
@@ -221,17 +217,15 @@ function reduceQty(){
     let current_quantity = document.getElementById('quantity');
     
     current_qty = current_quantity.innerHTML.replace(/\s/g, '');
-
-  
-  
     current_qty = Number(current_qty);
 
     
     if(current_qty != 1){
+        updatePrice(current_qty, '-');
         current_qty--;
         current_quantity.innerHTML = current_qty;
         console.log(current_qty);
-        updatePrice(current_qty, '-');
+        
     }
     
     
@@ -247,8 +241,8 @@ function updatePrice(quantity, operand){
 
     if (newCurr[0] == '\n'){
         newCurr.splice(0,1);
-        base_price = parseInt(newCurr[1]);
-        price = base_price;
+        price = parseInt(newCurr[1]);
+        base_price = (price / quantity);
     };
    
 
@@ -262,7 +256,6 @@ function updatePrice(quantity, operand){
             break;
     }
 
-   
 
     current_price.innerHTML = "Php " + price.toFixed(2);
     console.log(price);
