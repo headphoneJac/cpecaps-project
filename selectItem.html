@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
     <title>Baked Sisig</title>
 </head>
 <body>
@@ -15,7 +14,7 @@
             <li><a href="homeCustomer.html">Home</a></li>
             <li><a href="menuCustomer.html">Menu</a></li>
             <li><a href="viewOrder.html">Orders</a></li>
-            <li><a href="home.html">Logout</a></li>
+            <li><a id="logOut">Logout</a></li>
         </ul>
     </nav>
     <br><br>
@@ -54,7 +53,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
     import { getDatabase, ref, set , child, push, update, get} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
-    import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -77,6 +76,7 @@
     const auth = getAuth();
     const db = getDatabase();
     const amountText = parseInt(document.getElementById("amount").textContent);
+
     addOrders.addEventListener('click', (e) => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -179,5 +179,16 @@
             }
         });
     })
+
+    logOut.addEventListener('click', (e) => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            alert('User logged out.');
+            window.location.replace("login.html");
+        }).catch((error) => {
+            // An error happened.
+        });
+    })
 </script>
+<script src="script.js"></script>
 </html>

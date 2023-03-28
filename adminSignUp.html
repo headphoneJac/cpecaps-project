@@ -85,8 +85,6 @@
             // Signed in 
             const user = userCredential.user;
 
-            const dt = new Date();
-
             set(ref(database, 'adminUsers/' + user.uid), {
                 email : email,
                 firstname : firstname,
