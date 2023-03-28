@@ -183,31 +183,60 @@ document.addEventListener('click', function(e){
 
 
     if (id_button_clicked == 'plus-btn'){
-        console.log('add');
+
+        addQty();
     }
 
     else if (id_button_clicked == 'minus-btn'){
-        console.log('minus');
+        reduceQty();
     }
 })
 
+
+// ADD QUANTITY
 function addQty(){
 
     let current_quantity = document.getElementById('quantity');
     
-    current_quantity = Number(current_quantity);
-    current_quantity = current_quantity + 1;
+    current_qty = current_quantity.innerHTML;
+    current_qty.replace(/\s/g, '');
+    current_qty = Number(current_qty);
 
-    let p = document.createElement("p");
-    let newQty = document.createTextNode(current_quantity);
+    
 
-    p.appendChild(newQty);
+    current_qty++;
+    current_quantity.innerHTML = current_qty;
+    console.log(current_qty);
+    updatePrice(current_qty);
 
-
+    //UPDATE PRICE TOO
 
 
 }
 
+
+// REDUCE QUANTITY
 function reduceQty(){
 
+    let current_quantity = document.getElementById('quantity');
+    
+    current_qty = current_quantity.innerHTML;
+    current_qty.replace(/\s/g, '');
+    current_qty = Number(current_qty);
+
+    
+
+    current_qty--;
+    current_quantity.innerHTML = current_qty;
+    console.log(current_qty);
+    updatePrice(current_qty);
+
+}
+
+
+function updatePrice(quantity){
+    let current_price = document.getElementById('view-prod-price');
+    curr_price = current_price.innerHTML;
+    curr_price.replace(/\s/g, '');
+    console.log(curr_price);
 }
