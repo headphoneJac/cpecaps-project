@@ -198,8 +198,7 @@ function addQty(){
 
     let current_quantity = document.getElementById('quantity');
     
-    current_qty = current_quantity.innerHTML;
-    current_qty.replace(/\s/g, '');
+    current_qty = current_quantity.innerHTML.replace(/\s/g, '');
     current_qty = Number(current_qty);
 
     
@@ -207,7 +206,8 @@ function addQty(){
     current_qty++;
     current_quantity.innerHTML = current_qty;
     console.log(current_qty);
-    updatePrice(current_qty);
+    updatePrice(current_qty, '+');
+
 
     //UPDATE PRICE TOO
 
@@ -220,8 +220,10 @@ function reduceQty(){
 
     let current_quantity = document.getElementById('quantity');
     
-    current_qty = current_quantity.innerHTML;
-    current_qty.replace(/\s/g, '');
+   current_qty = current_quantity.innerHTML.replace(/\s/g, '');
+
+  
+  
     current_qty = Number(current_qty);
 
     
@@ -229,14 +231,40 @@ function reduceQty(){
     current_qty--;
     current_quantity.innerHTML = current_qty;
     console.log(current_qty);
-    updatePrice(current_qty);
+    updatePrice(current_qty, '-');
 
 }
 
 
-function updatePrice(quantity){
+function updatePrice(quantity, operand){
     let current_price = document.getElementById('view-prod-price');
+    
+    
     curr_price = current_price.innerHTML;
-    curr_price.replace(/\s/g, '');
-    console.log(curr_price);
+    
+    newCurr = curr_price.split(' ');
+
+    newCurr = newCurr.filter((a) => a);
+
+    if (newCurr[0] == '\n'){
+        newCurr.splice(0,1);
+        base_price = parseInt(newCurr[1]);
+        price = base_price;
+    };
+   
+
+    switch(operand){
+        case '+':
+            price = price + base_price;
+            break;
+        
+        case '-':
+            price = price - base_price;
+            break;
+    }
+
+   
+
+    current_price.innerHTML = "Php " + price.toFixed(2);
+    console.log(price);
 }
