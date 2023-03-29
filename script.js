@@ -145,7 +145,7 @@ function subPrice(){
         case bundleB.getName():
             var price = bundleB.getPrice(); 
             break;        
-    }
+    }/*
     if (document.getElementById("itemName").innerHTML == mangoStickyRice.getName()){
         var price = mangoStickyRice.getPrice();
     }
@@ -154,7 +154,7 @@ function subPrice(){
     }
     else if(document.getElementById("itemName").innerHTML == bakedSisigAlaCarte.getName()){
         var price = bakedSisigAlaCarte.getPrice();  
-    } 
+    } */
     var amount = document.getElementById('amount');
     var currAmount = parseInt(amount.innerHTML);
     var newAmount = currAmount - 1;  

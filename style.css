@@ -179,6 +179,9 @@ button.customerSignUp, button.adminSignUp {
     text-align: center;
     cursor: pointer;
 }
+.styleCursor {
+    cursor: pointer;
+ }
 
 .circleButton{
     width: 50px;
@@ -188,6 +191,7 @@ button.customerSignUp, button.adminSignUp {
 
 .boxButton{    
     border-radius: 12px;
+    width: 50%;
 }
 
 /*View Orders*/

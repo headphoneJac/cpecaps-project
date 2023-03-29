@@ -21,7 +21,7 @@
     <div class="containerCenter">
         <div class = "row">
             <div class = "columnForItems">
-                <p id="itemName"></p>
+                <h2 id="itemName"></h2>
                     <script>
                         const itemName = localStorage.getItem("itemName");   
                         document.getElementById("itemName").textContent = itemName;                       
@@ -49,6 +49,15 @@
     </div>
 </body>
 
+<!--For designed alert box using SweetAlert-->
+<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src= "https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
+<style type= "text/css">
+    alertButton {
+        padding: 15px;
+        text-align: center;
+    }
+</style>
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
@@ -75,7 +84,7 @@
     const database = getDatabase(app);
     const auth = getAuth();
     const db = getDatabase();
-    const amountText = parseInt(document.getElementById("amount").textContent);
+    //const amountText = parseInt(document.getElementById("amount").textContent);
 
     addOrders.addEventListener('click', (e) => {
         onAuthStateChanged(auth, (user) => {
@@ -123,13 +132,13 @@
                         bundleB: parseInt(document.getElementById("amount").textContent)                   
                     })
                     break;       
-                }alert('order added!');
+                }
+                
                 
                 //total amount                
                 get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/')).then((snapshot) =>{
                     const data = snapshot.val();
-                    var totalPrice=0;
-                    
+                    var totalPrice=0;                    
                     for (var itemName in data) {
                         var amount = data[itemName];
                         switch(itemName){
@@ -165,12 +174,16 @@
                                 var price = 2120*amount;
                                 totalPrice = totalPrice + price;
                                 break;        
-                        }                        
-                    }                    
-                    alert("Total price right now is PhP "+totalPrice);
-                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        }
+                        update(ref(database, 'customerUsers/' + user.uid), {                        
                         totalPrice: totalPrice
-                        })
+                        })                
+                    }
+                    Swal.fire({
+                        title: "Your order has been recorded!",
+                        text: "Total price right now is PhP "+totalPrice,
+                        icon: "success",
+                    });
                 }) 
             } 
             else {
@@ -190,5 +203,7 @@
         });
     })
 </script>
+
+
 <script src="script.js"></script>
 </html>
