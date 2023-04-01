@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Baked Sisig</title>
+</head>
+<body>
+    <br><br>
+    <nav>
+        <ul class="navigationBar">
+            <li><a href="homeCustomer.html">Home</a></li>
+            <li><a href="menuCustomer.html">Menu</a></li>
+            <li><a href="viewOrder.html">Orders</a></li>
+            <li><a id="logOut">Logout</a></li>
+        </ul>
+    </nav>
+    <br><br>
+    <div class = "textAlign25Percent">        
+        <h1> Select Mode of Payment</h1>
+    </div>
+    <div class="radio-container">
+        <br>
+        <input type="radio" id="bpi" name="modeOfPayment" class="modeOfPayment" value="BPI">
+        <label for="bpi">BPI</label><br><br>
+        <input type="radio" id="gcash" name="modeOfPayment" class="modeOfPayment" value="GCash">
+        <label for="gcash">GCash</label><br><br>
+        <input type="radio" id="cashOnDelivery" name="modeOfPayment" class="modeOfPayment" value="Cash on Delivery">
+        <label for="cashOnDelivery">Cash on Delivery</label><br><br>
+    </div>
+    
+    <div class = "textAlign25Percent">
+        <h1> Select Mode of Order Transportation</h1>
+    </div>
+    <div class="radio-container">
+        <br>
+        <input type="radio" id="pickup" name="modeOfOrderTransportation" class="modeOfOrderTransportation" value="Pickup">
+        <label for="pickup">Pickup</label><br><br>
+        <input type="radio" id="lalamove" name="modeOfOrderTransportation" class="modeOfOrderTransportation" value="Lalamove">
+        <label for="lalamove">Lalamove</label><br><br>
+        <input type="radio" id="grab" name="modeOfOrderTransportation" class="modeOfOrderTransportation" value="Grab">
+        <label for="grab">Grab</label><br><br>
+    </div>
+    <div class = "containerCenter">
+        <button id = "completeOrder" class="styleButton boxButton" style = "width: 25%"> Compelte Order</button>
+    </div>
+</body>
+<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src= "https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, ref, set , child, push, update, get} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const db = getDatabase();
+    
+    completeOrder.addEventListener('click', (e) => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userId = user.uid;
+                console.log(user.uid);
+                var selectedPayment = document.querySelector('input[name="modeOfPayment"]:checked');                
+                var selectedOrderTransportation = document.querySelector('input[name="modeOfOrderTransportation"]:checked');
+                var modeOfPayment = document.querySelectorAll('.modeOfPayment');
+                //var modeOfPayment = document.getElementsByName("modeOfPayment");
+                var modeOfOrderTransportation = document.querySelectorAll('.modeOfOrderTransportation');
+                var paymentIsChecked = false;
+                var orderTransportationIsCheck = false;
+                for (var i = 0; i < modeOfPayment.length; i++) {
+                    if (modeOfPayment[i].checked) {                        
+                        paymentIsChecked = true;
+                        break;
+                    }
+                }
+                for (var i = 0; i < modeOfOrderTransportation.length; i++) {
+                    if (modeOfOrderTransportation[i].checked) {
+                        orderTransportationIsCheck = true;
+                        break;
+                    }
+                }
+                if (!paymentIsChecked || !orderTransportationIsCheck) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please choose one for each',                        
+                    })
+                }
+                else{
+                    update(ref(database, 'customerUsers/' + user.uid), {                
+                        modeOfPayment: selectedPayment.value,
+                        modeOfOrderTransportation: selectedOrderTransportation.value
+                    })
+                }
+            }
+        })
+       //document.querySelector('form').addEventListener('completeOrder', function(event) {
+
+    });
+</script>
+
+</html>

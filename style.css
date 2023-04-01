@@ -322,3 +322,58 @@ button.customerSignUp, button.adminSignUp {
 
     
 }
+
+.radio-container {
+    margin-left: 20%;
+}
+  
+
+
+
+
+/* Hide the default radio button */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    margin: 0;
+  }
+  
+  /* Create custom radio button */
+  input[type="radio"]::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  /* Style the custom radio button when selected */
+  input[type="radio"]:checked::before {
+    background-color: #FFB627;
+    border-color: #2196F3;
+  }
+  
+  /* Add hover effect to custom radio button */
+  input[type="radio"]::before:hover {
+    border-color: #2196F3;
+  }
+  
+  /* Style the label for the custom radio button */
+  .radio-container label {
+    display: inline-block;
+  
+    vertical-align: middle;
+    font-size: 20px;
+    color: #444;
+    cursor: pointer;
+  }
+  
+  /* Add hover effect to label */
+  label:hover {
+    color: #FFB627;
+  }
