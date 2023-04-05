@@ -112,6 +112,11 @@
                         modeOfPayment: selectedPayment.value,
                         modeOfOrderTransportation: selectedOrderTransportation.value
                     })
+                    Swal.fire({
+                        title: "Your order has been completed!",
+                        text: "Your mode of payment is "+ selectedPayment.value+ " and mode of transportation is by " +selectedOrderTransportation.value,
+                        icon: "success",
+                    });
                 }
             }
         })
