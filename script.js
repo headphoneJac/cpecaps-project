@@ -181,13 +181,13 @@ document.addEventListener('click', function(e){
     id_button_clicked = e.target.id;
     class_button_clicked = e.target.className;
 
-    if (id_button_clicked == 'plus-btn'){
+    if (id_button_clicked == 'plusBtn'){
 
-        addQty();
+        //addQty();
     }
 
-    else if (id_button_clicked == 'minus-btn'){
-        reduceQty();
+    else if (id_button_clicked == 'minusBtn'){
+        //reduceQty();
     }
 })
 
