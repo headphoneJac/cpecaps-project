@@ -168,8 +168,8 @@
         console.log(''+ id +' '+img_src+' '+price+' '+ product_name + ' '+quantity);
 
         cart = '\
-        <div class="row-products">\
-            <div class="check-out-product" id='+id+'">\
+        <div class="row-products" id="'+id+'">\
+            <div class="check-out-product">\
                 <div class="column image">\
                     <img class="prod-img" src="'+img_src+'">\
                 </div>\
@@ -266,6 +266,14 @@
         current_quantity.innerHTML = current_qty;
         //console.log(current_qty);
 
+        onAuthStateChanged(auth, (user) =>{
+            if(user){
+                update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
+                [id]: current_qty                
+            })
+            }
+        });
+        
     }
 
 
@@ -287,6 +295,14 @@
             current_quantity.innerHTML = current_qty;
             // console.log(current_qty);
         }
+
+        onAuthStateChanged(auth, (user) =>{
+            if(user){
+                update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
+                [id]: current_qty                
+            })
+            }
+        });
 
 
     }
