@@ -49,56 +49,7 @@
 
 
     <div class="view-order-container" id="view-order-container">
-        
-        <!-- <div class="row-products">
-            <div class="check-out-product" id="product-id">
-                <div class="column image">
-                    <img class="prod-img" src="images\sisigAlaCarte.png">
-                </div>
-                <div class="column price">
-                    <br>
-
-                    <p id="view-prod-price">
-                        Php 250.00
-                    </p>
-                    
-                </div>
-                <div class="column name">
-                    <br>
-                    Baked Sisig ala Carte
-                </div>
-                
-                <div class="column minus">
-                
-                    <button class="minus-btn" id="minusBtn">
-                        -
-                    </button>
-                </div>
-                <div class="column number">
-                    <br>
-
-                    <p id="quantity">
-                        1
-                    </p>
-                    
-                </div> 
-                <div class="column plus">
-                    <button  class='plus-btn' id="plusBtn">
-                        +
-                    </button>
-                </div>
-                <div class="column delete">
-                    <br>
-                    
-                    <img class="prod-del" src="images\delete.png">
-                         
-                </div>
-            </div>
-        </div>
-        <br> -->
-        
-
-
+        <!-- DOM Manipulation Here -->
     </div>
 
     
@@ -225,7 +176,7 @@
                 <div class="column price">\
                     <br>\
 \
-                    <p id="view-prod-price">\
+                    <p id="'+id+'Price">\
                         Php ' + price.toFixed(2)+'\
                     </p>\
                     \
@@ -276,62 +227,95 @@
     document.addEventListener('click', function(e){
         let id_button_clicked = e.target.id;
         let class_button_clicked = e.target.className;
+        let specific_product_pressed = '';
+        
 
-        if (id_button_clicked == 'plusBtn'){
-
-            addQty();
+        if(id_button_clicked.includes('PlusBtn')){
+            specific_product_pressed = id_button_clicked.replace(/PlusBtn/g,'');
+            addQty(specific_product_pressed);
+        }
+        else if(id_button_clicked.includes('MinusBtn')){
+            specific_product_pressed = id_button_clicked.replace(/MinusBtn/g,'');
+            reduceQty(specific_product_pressed);
         }
 
-        else if (id_button_clicked == 'minusBtn'){
-            reduceQty();
-        }
-
-        // console.log(id_button_clicked);
-        var pDoc = document.getElementById(id_button_clicked);
-        let parentDiv = pDoc.parentNode.parentNode;
-        console.log(parentDiv);
+        
+    
+            
+        console.log(id_button_clicked);
     
     })
 
 
-    // 2. ADD QUANTITY
-    // 3. UPDATE DATABASE 
-    // 
-    function addQty(){
 
-        let current_quantity = document.getElementById('quantity');
+    function addQty(id){
 
+        let target_quantity = id +  'Quantity';
+        
+        console.log(target_quantity);
+        let current_quantity = document.getElementById(target_quantity);
+    
         let current_qty = current_quantity.innerHTML.replace(/\s/g, '');
         current_qty = Number(current_qty);
+        console.log(current_qty);
 
 
-        //updatePrice(current_qty, '+');
+        updatePrice(current_qty, '+', id);
 
         current_qty++;
         current_quantity.innerHTML = current_qty;
-        console.log(current_qty);
+        //console.log(current_qty);
 
     }
 
 
     // REDUCE QUANTITY
-    function reduceQty(){
-
-        let current_quantity = document.getElementById('quantity');
+    function reduceQty(id){
+        let target_quantity = id +  'Quantity';
+        
+        console.log(target_quantity);
+        
+        let current_quantity = document.getElementById(target_quantity);
 
         let current_qty = current_quantity.innerHTML.replace(/\s/g, '');
         current_qty = Number(current_qty);
 
 
         if(current_qty != 1){
-            //updatePrice(current_qty, '-');
+            updatePrice(current_qty, '-', id);
             current_qty--;
             current_quantity.innerHTML = current_qty;
-            console.log(current_qty);
-            
+            // console.log(current_qty);
         }
 
 
+    }
+
+    function updatePrice(quantity, operand, id){
+        let target_price = id + 'Price';
+        let current_price = document.getElementById(target_price);
+        let curr_price = current_price.innerHTML;
+        let newCurr = curr_price.split(' ');
+        newCurr = newCurr.filter((a) => a);
+        
+        let price = parseInt(newCurr[1]);
+        let base_price = (price / quantity);
+
+    
+
+        switch(operand){
+            case '+':
+                price = price + base_price;
+                break;
+            
+            case '-':
+                price = price - base_price;
+                break;
+        }
+
+
+        current_price.innerHTML = "Php " + price.toFixed(2);
+        console.log(price);
     }
 
 
