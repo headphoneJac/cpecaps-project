@@ -48,9 +48,9 @@
     
 
 
-    <div class="view-order-container">
-        <!-- PRODUCTS HERE-->
-        <div class="row-products">
+    <div class="view-order-container" id="view-order-container">
+        
+        <!-- <div class="row-products">
             <div class="check-out-product" id="product-id">
                 <div class="column image">
                     <img class="prod-img" src="images\sisigAlaCarte.png">
@@ -83,123 +83,25 @@
                     
                 </div> 
                 <div class="column plus">
-                    
                     <button  class='plus-btn' id="plusBtn">
-                        
                         +
                     </button>
                 </div>
-                <!--<div class="column delete">
+                <div class="column delete">
                     <br>
                     
                     <img class="prod-del" src="images\delete.png">
                          
-                </div>-->
+                </div>
             </div>
         </div>
+        <br> -->
+        
+
+
     </div>
 
-    <div class="view-order-container">
-        <!-- PRODUCTS HERE-->
-        <div class="row-products">
-            <div class="check-out-product" id="product-id">
-                <div class="column image">
-                    <img class="prod-img" src="images\sisigAlaCarte.png">
-                </div>
-                <div class="column price">
-                    <br>
-
-                    <p id="view-prod-price">
-                        Php 250.00
-                    </p>
-                    
-                </div>
-                <div class="column name">
-                    <br>
-                    Baked Sisig ala Carte
-                </div>
-                
-                <div class="column minus">
-                
-                    <button class="minus-btn">
-                        -
-                    </button>
-                </div>
-                <div class="column number">
-                    <br>
-
-                    <p id="quantity">
-                        1
-                    </p>
-                    
-                </div> 
-                <div class="column plus">
-                    
-                    <button  class='plus-btn'>
-                        
-                        +
-                    </button>
-                </div>
-                <!--<div class="column delete">
-                    <br>
-                    
-                    <img class="prod-del" src="images\delete.png">
-                         
-                </div>-->
-            </div>
-        </div>
-    </div>
-
-        <div class="view-order-container">
-        <!-- PRODUCTS HERE-->
-        <div class="row-products">
-            <div class="check-out-product" id="product-id">
-                <div class="column image">
-                    <img class="prod-img" src="images\sisigAlaCarte.png">
-                </div>
-                <div class="column price">
-                    <br>
-
-                    <p id="view-prod-price">
-                        Php 250.00
-                    </p>
-                    
-                </div>
-                <div class="column name">
-                    <br>
-                    Baked Sisig ala Carte
-                </div>
-                
-                <div class="column minus">
-                
-                    <button class="minus-btn">
-                        -
-                    </button>
-                </div>
-                <div class="column number">
-                    <br>
-
-                    <p id="quantity">
-                        1
-                    </p>
-                    
-                </div> 
-                <div class="column plus">
-                    
-                    <button  class='plus-btn'>
-                        
-                        +
-                    </button>
-                </div>
-                <!--<div class="column delete">
-                    <br>
-                    
-                    <img class="prod-del" src="images\delete.png">
-                         
-                </div>-->
-            </div>
-        </div>
-    </div>
+    
 
     
 </body>
@@ -229,40 +131,208 @@
     const database = getDatabase(app);
     const auth = getAuth();
     const db = getDatabase();
+    let cart = '';
     // let price;
     // let base_price;
 
-
-    plusBtn.addEventListener('click', (e) => {
-        let current_quantity = document.getElementById('quantity');
     
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+                
+            get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/')).then((snapshot)=>{
+                const data = snapshot.key;
+                
+                snapshot.forEach(product_name => {    
+                        
+
+                        if(product_name.val() != 0){
+                            
+                            switch(product_name.key){
+                                case "mangoStickyRice":
+                                    cartHTML(product_name.key, mangoStickyRice.getName(), 
+                                    mangoStickyRice.getPrice() * product_name.val(),  
+                                    mangoStickyRice.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "sisigAlaCarte":
+                                    cartHTML(product_name.key, sisigAlaCarte.getName(), 
+                                    sisigAlaCarte.getPrice() * product_name.val(),  
+                                    sisigAlaCarte.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "bakedSisigAlaCarte":
+                                    cartHTML(product_name.key, bakedSisigAlaCarte.getName(), 
+                                    bakedSisigAlaCarte.getPrice() * product_name.val(),  
+                                    bakedSisigAlaCarte.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "mangoStickyRiceParty":
+                                    cartHTML(product_name.key, mangoStickyRiceParty.getName(), 
+                                    mangoStickyRiceParty.getPrice() * product_name.val(),  
+                                    mangoStickyRiceParty.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "sisigAlaCarteParty":
+                                    cartHTML(product_name.key, sisigAlaCarteParty.getName(), 
+                                    sisigAlaCarteParty.getPrice() * product_name.val(),  
+                                    sisigAlaCarteParty.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "bakedSisigParty":
+                                    cartHTML(product_name.key, bakedSisigParty.getName(), 
+                                    bakedSisigParty.getPrice() * product_name.val(),  
+                                    bakedSisigParty.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "bundleA":
+                                    cartHTML(product_name.key, bundleA.getName(), 
+                                    bundleA.getPrice() * product_name.val(),  
+                                    bundleA.getImage(), 
+                                    product_name.val());
+                                    break;
+                                case "bundleB":
+                                    cartHTML(product_name.key, bundleB.getName(), 
+                                    bundleB.getPrice() * product_name.val(),  
+                                    bundleB.getImage(), 
+                                    product_name.val());
+                                    break;
+ 
+                            }
+                            
+                            
+                            
+                        }
+                });
+                    
+            });
+            
+        
+        }
+           
+    });
+
+    //cartHTML('bakedSisigAlaCarte', 'Baked Sisig ala Carte',  600, 'images/bakedSisigAlaCarte.png' , 2);
+
+    function cartHTML(id, product_name, price, img_src, quantity){
+        console.log(''+ id +' '+img_src+' '+price+' '+ product_name + ' '+quantity);
+
+        cart = '\
+        <div class="row-products">\
+            <div class="check-out-product" id='+id+'">\
+                <div class="column image">\
+                    <img class="prod-img" src="'+img_src+'">\
+                </div>\
+                <div class="column price">\
+                    <br>\
+\
+                    <p id="view-prod-price">\
+                        Php ' + price.toFixed(2)+'\
+                    </p>\
+                    \
+                </div>\
+                <div class="column name">\
+                    <br>\
+                    '+product_name+'\
+                </div>\
+\
+                <div class="column minus">\
+\
+                    <button class="minus-btn" id="'+id+'MinusBtn">\
+                        -\
+                    </button>\
+                </div>\
+                <div class="column number">\
+                    <br>\
+\
+                    <p id="'+id+'Quantity">\
+                        '+quantity+'\
+                    </p>\
+                    \
+                </div>\
+                <div class="column plus">\
+                    <button class="plus-btn" id="'+id+'PlusBtn">\
+                        +\
+                    </button>\
+                </div>\
+            </div>\
+        </div>\
+        <br>\
+        ';
+
+
+        
+        // <div class="column delete">\
+        //             <br>\
+        //             \
+        //             <img class="prod-del" src="images/delete.png">\
+        //                  \
+        //         </div>\
+        document.getElementById('view-order-container').insertAdjacentHTML('beforeend',cart);
+
+    }
+
+
+    
+    document.addEventListener('click', function(e){
+        let id_button_clicked = e.target.id;
+        let class_button_clicked = e.target.className;
+
+        if (id_button_clicked == 'plusBtn'){
+
+            addQty();
+        }
+
+        else if (id_button_clicked == 'minusBtn'){
+            reduceQty();
+        }
+
+        // console.log(id_button_clicked);
+        var pDoc = document.getElementById(id_button_clicked);
+        let parentDiv = pDoc.parentNode.parentNode;
+        console.log(parentDiv);
+    
+    })
+
+
+    // 2. ADD QUANTITY
+    // 3. UPDATE DATABASE 
+    // 
+    function addQty(){
+
+        let current_quantity = document.getElementById('quantity');
+
         let current_qty = current_quantity.innerHTML.replace(/\s/g, '');
         current_qty = Number(current_qty);
 
-        updatePrice(current_qty, '+'); // Function in script.js
+
+        //updatePrice(current_qty, '+');
 
         current_qty++;
         current_quantity.innerHTML = current_qty;
         console.log(current_qty);
 
-    });
+    }
 
-    minusBtn.addEventListener('click', (e) => {
+
+    // REDUCE QUANTITY
+    function reduceQty(){
+
         let current_quantity = document.getElementById('quantity');
-    
+
         let current_qty = current_quantity.innerHTML.replace(/\s/g, '');
         current_qty = Number(current_qty);
 
-        
+
         if(current_qty != 1){
-            updatePrice(current_qty, '-'); // Function in script.js
+            //updatePrice(current_qty, '-');
             current_qty--;
             current_quantity.innerHTML = current_qty;
             console.log(current_qty);
             
         }
-    });
 
+
+    }
 
 
 

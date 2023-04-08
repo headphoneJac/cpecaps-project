@@ -117,7 +117,7 @@ function addPrice() {
     var newAmount = currAmount + 1;    
     amount.innerHTML =  newAmount;
     var newPrice = price * newAmount;
-    document.getElementById('price').innerHTML =  "PhP " + newPrice.toFixed(2);
+    document.getElementById('price').innerHTML =  "Php " + newPrice.toFixed(2);
 }
 function subPrice(){
     switch(document.getElementById("itemName").innerHTML){
@@ -176,87 +176,34 @@ function addOrder(){
 }
 
 
-// VIEW ORDER PAGE
-document.addEventListener('click', function(e){
-    id_button_clicked = e.target.id;
-    class_button_clicked = e.target.className;
-
-    if (id_button_clicked == 'plusBtn'){
-
-        //addQty();
-    }
-
-    else if (id_button_clicked == 'minusBtn'){
-        //reduceQty();
-    }
-})
 
 
-// ADD QUANTITY
-function addQty(){
+// VIEW ORDER SECTION
 
-    let current_quantity = document.getElementById('quantity');
-    
-    current_qty = current_quantity.innerHTML.replace(/\s/g, '');
-    current_qty = Number(current_qty);
+// function updatePrice(quantity, operand){
+//     let current_price = document.getElementById('view-prod-price');
+//     curr_price = current_price.innerHTML;
+//     newCurr = curr_price.split(' ');
+//     newCurr = newCurr.filter((a) => a);
 
-    
-    updatePrice(current_qty, '+');
-
-    current_qty++;
-    current_quantity.innerHTML = current_qty;
-    console.log(current_qty);
-    
-
-}
-
-
-// REDUCE QUANTITY
-function reduceQty(){
-
-    let current_quantity = document.getElementById('quantity');
-    
-    current_qty = current_quantity.innerHTML.replace(/\s/g, '');
-    current_qty = Number(current_qty);
-
-    
-    if(current_qty != 1){
-        updatePrice(current_qty, '-');
-        current_qty--;
-        current_quantity.innerHTML = current_qty;
-        console.log(current_qty);
-        
-    }
-    
-    
-
-}
-
-
-function updatePrice(quantity, operand){
-    let current_price = document.getElementById('view-prod-price');
-    curr_price = current_price.innerHTML;
-    newCurr = curr_price.split(' ');
-    newCurr = newCurr.filter((a) => a);
-
-    if (newCurr[0] == '\n'){
-        newCurr.splice(0,1);
-        price = parseInt(newCurr[1]);
-        base_price = (price / quantity);
-    };
+//     if (newCurr[0] == '\n'){
+//         newCurr.splice(0,1);
+//         price = parseInt(newCurr[1]);
+//         base_price = (price / quantity);
+//     };
    
 
-    switch(operand){
-        case '+':
-            price = price + base_price;
-            break;
+//     switch(operand){
+//         case '+':
+//             price = price + base_price;
+//             break;
         
-        case '-':
-            price = price - base_price;
-            break;
-    }
+//         case '-':
+//             price = price - base_price;
+//             break;
+//     }
 
 
-    current_price.innerHTML = "Php " + price.toFixed(2);
-    console.log(price);
-}
+//     current_price.innerHTML = "Php " + price.toFixed(2);
+//     console.log(price);
+// }
