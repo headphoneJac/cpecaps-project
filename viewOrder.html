@@ -49,6 +49,7 @@
 
 
     <div class="view-order-container" id="view-order-container">
+        <br>
         <!-- DOM Manipulation Here -->
     </div>
 
@@ -261,9 +262,10 @@
 
 
         updatePrice(current_qty, '+', id);
-
+        
         current_qty++;
         current_quantity.innerHTML = current_qty;
+        
         //console.log(current_qty);
 
         onAuthStateChanged(auth, (user) =>{
@@ -273,6 +275,10 @@
             })
             }
         });
+
+        updateTotalDb();
+
+        
         
     }
 
@@ -292,6 +298,8 @@
         if(current_qty != 1){
             updatePrice(current_qty, '-', id);
             current_qty--;
+            
+
             current_quantity.innerHTML = current_qty;
             // console.log(current_qty);
         }
@@ -304,6 +312,116 @@
             }
         });
 
+        updateTotalDb();
+
+
+    }
+
+    
+    function updatePrice(quantity, operand, id){
+        let target_price = id + 'Price';
+        let current_price = document.getElementById(target_price);
+        let curr_price = current_price.innerHTML;
+        let newCurr = curr_price.split(' ');
+        newCurr = newCurr.filter((a) => a);
+        
+        let price = parseInt(newCurr[1]);
+        let base_price = (price / quantity);
+
+        
+
+        switch(operand){
+            case '+':
+                price = price + base_price;
+                // update(ref(database, 'customerUsers/' + user.uid), {                
+                //     totalPrice: totalPrice + base_price                 
+                // });
+                break;
+            
+            case '-':
+                price = price - base_price;
+                // update(ref(database, 'customerUsers/' + user.uid), {                
+                //     totalPrice: totalPrice - base_price                 
+                // });
+                break;
+        }
+
+
+
+        current_price.innerHTML = "Php " + price.toFixed(2);
+        console.log(price);
+    }
+
+    function updateTotalDb(quantity, id){
+
+        let base = 0;
+        let totalPrice = 0;
+        
+        onAuthStateChanged(auth, (user) =>{
+            if(user){
+
+                get(ref(database, 'customerUsers/' + user.uid + '/itemMenus')).then((snapshot)=>{
+                    
+                    
+                    snapshot.forEach(product_name => {    
+                        
+                        if(product_name.val() != 0){
+                            
+                            switch(product_name.key){
+                                case "mangoStickyRice":
+                                    base = 90*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "sisigAlaCarte":
+                                    base = 250*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "bakedSisigAlaCarte":
+                                    base = 300*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "mangoStickyRiceParty":
+                                    base = 250*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "sisigAlaCarteParty":
+                                    base = 700*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "bakedSisigParty":
+                                    base = 1100*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "bundleA":
+                                    base = 1340*product_name.val();
+                                    totalPrice = totalPrice + base;
+                                    break;
+                                case "bundleB":
+                                    base = 2120*product_name.val();
+                                    totalPrice = totalPrice + base; 
+                                    break;
+                            }
+
+                        }
+                        
+                    });
+                    console.log(totalPrice);
+                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        totalPrice: totalPrice
+                        })
+
+                    
+                });
+                
+            }
+
+            
+
+            
+
+            
+        });
+        
 
     }
 
