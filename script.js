@@ -180,30 +180,29 @@ function addOrder(){
 
 // VIEW ORDER SECTION
 
-// function updatePrice(quantity, operand){
-//     let current_price = document.getElementById('view-prod-price');
-//     curr_price = current_price.innerHTML;
-//     newCurr = curr_price.split(' ');
-//     newCurr = newCurr.filter((a) => a);
+function updatePrice(quantity, operand, id){
+    let target_price = id + 'Price';
+    let current_price = document.getElementById(target_price);
+    let curr_price = current_price.innerHTML;
+    let newCurr = curr_price.split(' ');
+    newCurr = newCurr.filter((a) => a);
+    
+    let price = parseInt(newCurr[1]);
+    let base_price = (price / quantity);
 
-//     if (newCurr[0] == '\n'){
-//         newCurr.splice(0,1);
-//         price = parseInt(newCurr[1]);
-//         base_price = (price / quantity);
-//     };
-   
 
-//     switch(operand){
-//         case '+':
-//             price = price + base_price;
-//             break;
+
+    switch(operand){
+        case '+':
+            price = price + base_price;
+            break;
         
-//         case '-':
-//             price = price - base_price;
-//             break;
-//     }
+        case '-':
+            price = price - base_price;
+            break;
+    }
 
 
-//     current_price.innerHTML = "Php " + price.toFixed(2);
-//     console.log(price);
-// }
+    current_price.innerHTML = "Php " + price.toFixed(2);
+    console.log(price);
+}
