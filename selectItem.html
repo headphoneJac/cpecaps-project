@@ -35,12 +35,9 @@
             </div>
             <div class = "columnForItems" style="margin-top:100px">         
                 <a id="price"></a>
-                    <script>
-                        const itemPrice = localStorage.getItem("itemPrice");    
-                        document.getElementById("price").textContent = "PhP " + itemPrice;                        
-                    </script>
+                    
                 <button class="styleButton circleButton" onclick="subPrice()">-</button>
-                <a id="amount">1</a>
+                <a id="amount"></a>
                 <button class="styleButton circleButton" onclick="addPrice()">+</button>
                 <br><br>
                 <button id = "addOrders" class="styleButton boxButton"> Add to my Order</button>
@@ -85,7 +82,9 @@
     const auth = getAuth();
     const db = getDatabase();
     //const amountText = parseInt(document.getElementById("amount").textContent);
+    
 
+    
     addOrders.addEventListener('click', (e) => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -192,7 +191,87 @@
             }
         });
     })
-
+    onAuthStateChanged(auth, (user) => {
+        const userId = user.uid;
+        get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/')).then((snapshot) =>{
+            const data = snapshot.val();
+            outerLoop: for (var itemName in data) {
+                var amount = data[itemName];
+                var newAmount = document.getElementById('amount');
+                var newPrice = document.getElementById('price');
+                var item = document.getElementById('itemName');
+                newAmount.textContent = amount;
+                console.log(item.textContent);
+                switch(itemName){
+                    case "mangoStickyRice":                        
+                        var price = 90*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Mango Sticky Rice"){
+                            console.log("hi");
+                            break outerLoop;
+                        }                            
+                        break;
+                    case "sisigAlaCarte":                        
+                        var price = 250*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Sisig ala Carte"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;
+                    case "bakedSisigAlaCarte":
+                        var price = 300*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Baked Sisig ala Carte"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;
+                    case "mangoStickyRiceParty":
+                        var price = 250*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Mango Sticky Rice Party"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;
+                    case "sisigAlaCarteParty":
+                        var price = 700*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Sisig ala Carte Party"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;
+                    case "bakedSisigParty":
+                        var price = 1100*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Baked Sisig ala Carte Party"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;
+                    case "bundleA":
+                        var price = 1340*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Bundle A"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;
+                    case "bundleB":
+                        var price = 2120*amount;
+                        newPrice.textContent = "PhP "+price;
+                        if(item.textContent === "Bundle B"){
+                            console.log("hi");
+                            break outerLoop;
+                        }     
+                        break;       
+                }
+             
+            }
+        })
+    })
     logOut.addEventListener('click', (e) => {
         signOut(auth).then(() => {
             // Sign-out successful.
@@ -202,6 +281,51 @@
             // An error happened.
         });
     })
+
+    function updateOrder(){
+        var newAmount = document.getElementById('amount');
+                var newPrice = document.getElementById('price');
+                var item = document.getElementById('itemName');
+                console.log(item.textContent);
+        switch(item.textContent){
+            case "Mango Sticky Rice":
+                newAmount.textContent = amount;
+                var price = 90*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Sisig ala Carte":
+                newAmount.textContent = amount;
+                var price = 250*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Baked Sisig ala Carte":
+                newAmount.textContent = amount;
+                var price = 300*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Mango Sticky Rice Party":
+                var price = 250*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Sisig ala Carte Party":
+                var price = 700*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Baked Sisig ala Carte Party":
+                var price = 1100*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Bundle A":
+                var price = 1340*amount;
+                newPrice.textContent = "PhP "+price;
+                break;
+            case "Bundle B":
+                var price = 2120*amount;
+                newPrice.textContent = "PhP "+price;
+                break;       
+        }
+
+    }
 </script>
 
 
