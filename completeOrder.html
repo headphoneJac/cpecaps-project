@@ -16,10 +16,6 @@
             <li><a href="menuCustomer.html">Menu</a></li>
             <li><a href="viewOrder.html">Orders</a></li>
             <li><a id="logOut">Logout</a></li>
-            <li><a href="userProfile.html">
-                <img class= 'idImage' src="images\user-profile.jpg">
-            </a></li>
-
         </ul>
     </nav>
     <br><br>
@@ -49,7 +45,7 @@
         <label for="grab">Grab</label><br><br>
     </div>
     <div class = "containerCenter">
-        <button id = "completeOrder" class="styleButton boxButton" style = "width: 25%"> Compelte Order</button>
+        <button id = "completeOrder" class="styleButton boxButton" style = "width: 25%"> Complete Order</button>
     </div>
 </body>
 <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -112,7 +108,74 @@
                     })
                 }
                 else{
-                    update(ref(database, 'customerUsers/' + user.uid), {                
+                    get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/')).then((snapshot)=>{
+                        snapshot.forEach(product_name => {  
+                            if(product_name.val() != 0){
+                                switch(product_name.key){
+                                    case "mangoStickyRice":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            mangoStickyRice: product_name.val()
+                                        })
+                                        break;
+                                    case "sisigAlaCarte":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            sisigAlaCarte: product_name.val()
+                                        })
+                                        break;
+                                    case "bakedSisigAlaCarte":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            bakedSisigAlaCarte: product_name.val()
+                                        })
+                                        break;
+                                    case "mangoStickyRiceParty":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            mangoStickyRiceParty: product_name.val()
+                                        })
+                                        break;
+                                    case "sisigAlaCarteParty":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            sisigAlaCarteParty: product_name.val()
+                                        })
+                                        break;
+                                    case "bakedSisigParty":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            bakedSisigParty: product_name.val()
+                                        })
+                                        break;
+                                    case "bundleA":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            bundleA: product_name.val()
+                                        })
+                                        break;
+                                    case "bundleB":
+                                        update(ref(database, 'orders/' + user.uid + '/itemMenus'), {
+                                            bundleB: product_name.val()
+                                        })
+                                        break;
+                                }
+                            }
+                        });
+                    })
+                    get(ref(database, 'customerUsers/' + user.uid + '/totalPrice')).then((snapshot)=>{
+                        const data = snapshot.val();
+                        update(ref(database, 'orders/' + user.uid), {
+                            totalPrice: data
+                        })
+                    })
+                    update(ref(database, 'customerUsers/' + user.uid), {
+                        totalPrice: 0
+                    })
+                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {
+                        mangoStickyRice: 0,
+                        sisigAlaCarte: 0,
+                        bakedSisigAlaCarte : 0,
+                        mangoStickyRiceParty : 0,
+                        sisigAlaCarteParty : 0,
+                        bakedSisigParty : 0,
+                        bundleA : 0,
+                        bundleB : 0
+                    })
+                    update(ref(database, 'orders/' + user.uid), {
                         modeOfPayment: selectedPayment.value,
                         modeOfOrderTransportation: selectedOrderTransportation.value
                     })
