@@ -234,6 +234,7 @@ button.customerSignUp, button.adminSignUp {
 
 .checkout{
     border-radius: 10px;
+    background-color: #D9D9D9;
 }
 
 .prod-img{
@@ -406,3 +407,100 @@ input[type="radio"] {
     height: 100px;
     border-radius: 50%;
   }
+
+  /* .outerImageContainer{
+    width:308px;
+    height:290px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  } */
+
+ .profileImg{
+    width: 310px;
+    height: 310px;
+    position: absolute;
+    padding: 55px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+
+    left: 77px;
+    top: 150px;
+
+ }
+
+ .detailsContainter{
+    
+ }
+
+ .userName{
+    
+    position: absolute;
+    width: 389px;
+    height: 60px;
+    left: 482px;
+    top: 178px;
+
+    background: #D9D9D9;
+    border-radius: 10px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000;
+ }
+
+ .userNo{
+    position: absolute;
+    width: 389px;
+    height: 60px;
+    left: 482px;
+    top: 279px;
+
+    background: #D9D9D9;
+    border-radius: 10px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000;
+
+ }
+
+ .userAddress{
+    position: absolute;
+    width: 389px;
+    height: 60px;
+    left: 482px;
+    top: 380px;
+
+    background: #D9D9D9;
+    border-radius: 10px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000; 
+
+ }
+ 
+ .bottomBorderProfile{
+    position: absolute;
+    width: 1920px;
+    height: 79px;
+    left: 0px;
+    top: 467px;
+    background: #FFB627;
+ }
