@@ -53,7 +53,7 @@
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-    import { getDatabase, ref, set , child, push, update, get} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getDatabase, ref, set , child, push, update, get } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -76,6 +76,8 @@
     const database = getDatabase(app);
     const auth = getAuth();
     const db = getDatabase();
+    const currentDate = new Date().toLocaleDateString();
+    const currentTime = new Date().toLocaleTimeString();
     
     completeOrder.addEventListener('click', (e) => {
         onAuthStateChanged(auth, (user) => {
@@ -108,7 +110,14 @@
                     })
                 }
                 else{
-                    get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/')).then((snapshot)=>{
+                    update(ref(database, 'orders/' + user.uid), {
+                        date: currentDate,
+                        time: currentTime,
+                        modeOfPayment: selectedPayment.value,
+                        modeOfOrderTransportation: selectedOrderTransportation.value
+                    })
+                    get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/'), {onlyOnce:true})
+                    .then((snapshot)=>{
                         snapshot.forEach(product_name => {  
                             if(product_name.val() != 0){
                                 switch(product_name.key){
@@ -156,28 +165,12 @@
                             }
                         });
                     })
-                    get(ref(database, 'customerUsers/' + user.uid + '/totalPrice')).then((snapshot)=>{
+                    get(ref(database, 'customerUsers/' + user.uid + '/totalPrice'), {onlyOnce:true})
+                    .then((snapshot)=>{
                         const data = snapshot.val();
                         update(ref(database, 'orders/' + user.uid), {
                             totalPrice: data
                         })
-                    })
-                    update(ref(database, 'customerUsers/' + user.uid), {
-                        totalPrice: 0
-                    })
-                    update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {
-                        mangoStickyRice: 0,
-                        sisigAlaCarte: 0,
-                        bakedSisigAlaCarte : 0,
-                        mangoStickyRiceParty : 0,
-                        sisigAlaCarteParty : 0,
-                        bakedSisigParty : 0,
-                        bundleA : 0,
-                        bundleB : 0
-                    })
-                    update(ref(database, 'orders/' + user.uid), {
-                        modeOfPayment: selectedPayment.value,
-                        modeOfOrderTransportation: selectedOrderTransportation.value
                     })
                     Swal.fire({
                         title: "Your order has been completed!",
