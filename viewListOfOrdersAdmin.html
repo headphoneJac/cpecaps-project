@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Baked Sisig</title>
+</head>
+<body>
+    <br><br>
+    <nav>
+        <ul class="navigationBar">
+            <li><a href="viewListOfOrdersAdmin.html">View Orders</a></li>
+            <li><a id="logOut">Logout</a></li>
+            <li><a href="userProfile.html">
+                <img class= 'idImage' src="images\user-profile.jpg">
+            </a></li>
+        </ul>
+    </nav>
+    <br><br>
+    <table id="orders-table">
+        <tr id="header">
+            <th> Surname </th>
+            <th> Payment </th>
+            <th> Date </th>
+            <th> Time </th>
+            <th> Total Price </th>
+            <th> Order Status </th>
+            <th> Delivery Status </th>
+        </tr>
+    </table>
+    
+    
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    import { getDatabase, get, ref } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    var UID, customerDetails;
+    let orders = '';
+
+    get(ref(database, 'orders/'))
+    .then((snapshot)=> {
+        snapshot.forEach(UID => {
+            UID = UID.key;
+
+            get(ref(database, 'orders/' + UID))
+            .then((snapshotChild)=> {
+                customerDetails = snapshotChild.val();
+
+                console.log(UID.length);
+                console.log(customerDetails);
+                
+                orders = '\
+                <tr id="orders-customer">\
+                    <td> Surname </td>\
+                    <td>'+ customerDetails.modeOfPayment +'</td>\
+                    <td>'+ customerDetails.date +'</td>\
+                    <td>'+ customerDetails.time +'</td>\
+                    <td>'+ customerDetails.totalPrice +'</td>\
+                    <td><select name="select-order-status" id="select-order-status">\
+                        <option value="Not Paid">Not Paid</option>\
+                        <option value="Paid">Paid</option>\
+                        <option value="Cancelled">Cancelled</option>\
+                        </select>\
+                    </td>\
+                    <td><select name="select-delivery-status" id="select-delivery-status">\
+                        <option value="Not Delivered">Not Delivered</option>\
+                        <option value="Delivered">Delivered</option>\
+                        <option value="Cancelled">Cancelled</option>\
+                        </select>\
+                    </td>\
+                </tr>\
+                ';
+
+                document.getElementById('header').insertAdjacentHTML('afterend', orders);
+            })
+
+        })
+    })
+
+    logOut.addEventListener('click', (e) => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            alert('User logged out.');
+            window.location.replace("login.html");
+        }).catch((error) => {
+            // An error happened.
+        });
+    })
+</script>
+</html>
