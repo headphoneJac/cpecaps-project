@@ -60,10 +60,10 @@
         <div class="total-container">
             <!-- DOM Manipulation Here -->
 
-            <p>
-                Total Price: Php 7790.00
+            <p id="displayTotal">
+                Total Price: 
             </p>
-
+            
             <button class="checkout" id="checkoutBtn">
                     Checkout
                 
@@ -112,9 +112,9 @@
     const auth = getAuth();
     const db = getDatabase();
     let cart = '';
-    // let price;
-    // let base_price;
-
+    
+   
+    
     
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -184,6 +184,15 @@
                         }
                 });
                     
+            });
+
+            get(ref(database, 'customerUsers/' + user.uid + '/totalPrice/')).then((snapshot)=>{
+
+                
+                let price = snapshot.val();
+                document.getElementById("displayTotal").textContent = "Total Price: Php "+ price.toFixed(2);
+
+
             });
             
         
@@ -310,6 +319,7 @@
         });
 
         updateTotalDb();
+
         
     }
 
@@ -449,10 +459,16 @@
                         }
                         
                     });
-                    console.log(totalPrice);
+                    //console.log(totalPrice);
                     update(ref(database, 'customerUsers/' + user.uid), {                        
                         totalPrice: totalPrice
                         })
+
+                    get(ref(database, 'customerUsers/' + user.uid + '/totalPrice/')).then((snapshot)=>{
+                        let price = snapshot.val();
+                        document.getElementById("displayTotal").textContent = "Total Price: Php "+ price.toFixed(2);
+
+                    });
 
                     
                 });
