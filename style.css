@@ -272,7 +272,9 @@ button.customerSignUp, button.adminSignUp {
 }
 .delete{
     width: 100px;
-    align-items:  right;
+    align-items: right;
+    position:absolute;
+    left:900px;
 }
 
 .row-products:after{

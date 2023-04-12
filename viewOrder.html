@@ -53,7 +53,7 @@
 
     <div class="product-table">
         <div class="view-order-container" id="view-order-container">
-        
+            <br>
             <!-- DOM Manipulation Here -->
         </div>
         <br>
@@ -65,7 +65,7 @@
             </p>
 
             <button class="checkout" id="checkoutBtn">
-                    
+                    Checkout
                 
             </button>
             <script>
@@ -234,19 +234,19 @@
                         +\
                     </button>\
                 </div>\
+                <div class="column delete">\
+                    <br>\
+                    \
+                    <img class="prod-del" src="images/delete.png" id="'+id+'Delete" >\
+                         \
+                </div>\
             </div>\
         </div>\
-        <br>\
         ';
 
 
         
-        // <div class="column delete">\
-        //             <br>\
-        //             \
-        //             <img class="prod-del" src="images/delete.png">\
-        //                  \
-        //         </div>\
+       
         document.getElementById('view-order-container').insertAdjacentHTML('beforeend',cart);
 
     }
@@ -266,6 +266,11 @@
         else if(id_button_clicked.includes('MinusBtn')){
             specific_product_pressed = id_button_clicked.replace(/MinusBtn/g,'');
             reduceQty(specific_product_pressed);
+        }
+
+        else if(id_button_clicked.includes('Delete')){
+            specific_product_pressed = id_button_clicked.replace(/Delete/g,'');
+            deleteOrder(specific_product_pressed);
         }
 
         
@@ -341,6 +346,27 @@
         updateTotalDb();
 
 
+    }
+
+    // DELETE ORDER
+
+    function deleteOrder(id){
+        //let target_order = id +  'Delete';
+        //console.log(target_order);
+        let deleteOrder = document.getElementById(id);
+        deleteOrder.parentNode.removeChild(deleteOrder);
+        onAuthStateChanged(auth, (user) =>{
+            if(user){
+                update(ref(database, 'customerUsers/' + user.uid + '/itemMenus'), {                
+                [id]: 0                
+            })
+            }
+        });
+
+
+
+
+        updateTotalDb();
     }
 
     
