@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Baked Sisig</title>
+</head>
+<body>
+    <br><br>
+    <nav>
+        <ul class="navigationBar">
+            <li><a href="saleStatus.html">View Sales</a></li>
+            <li><a href="viewListOfOrdersAdmin.html">View Orders</a></li>
+            <li><a id="logOut">Logout</a></li>            
+            <li><a href="userProfile.html">
+                <img class= 'idImage' src="images\user-profile.jpg">
+            </a></li>
+        </ul>
+    </nav>
+    <br><br>
+    <table id="orders-table">
+        <tr id="header">
+            <th> Menu </th>            
+            <th> Date </th>
+            <th> Total Amount </th>
+          <!--  <th> Total Price </th>-->
+        </tr>
+    </table>
+    <br><br>
+    <table id="orders-table">
+        <tr id="headerTotalSales">       
+            <th> Date </th>
+            <th> Total Sales </th>
+        </tr>
+    </table>
+    
+    
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    import { getDatabase, get, ref} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    var UID, customerDetails;
+    let saleStatus = '';
+    let mangoStickyRiceTotalArray = [];
+    let sisigAlaCarteTotalArray = [];
+    let bakedSisigAlaCarteTotalArray =[];
+    let mangoStickyRicePartyTotalArray = [];
+    let sisigAlaCartePartyTotalArray = [];
+    let bakedSisigPartyTotalArray = [];
+    let bundleATotalArray = [];
+    let bundleBTotalArray = [];
+    let totalSales = [];
+    const dateArray = [];
+
+    get(ref(database, 'orders')).then((snapshot) => {
+                const orders = snapshot.val();
+                for (const UID in orders) {
+                    const order = orders[UID];
+                    let totalPrice = order.totalPrice;
+                    let str = order.date
+                    addStringToArray(str);
+                    function addStringToArray(str) {
+                        if (!dateArray.includes(str)) {
+                            dateArray.push(str);
+                        }
+                    }
+                    for(let i =0;i<dateArray.length;i++){
+                        if (order.date === dateArray[i]) {    
+                            if(totalPrice !=undefined){
+                                if(totalSales[i]==undefined){
+                                    totalSales[i] = totalPrice;                                            
+                                }
+                                else{
+                                    totalSales[i] += totalPrice;                                                
+                                }  
+                            }
+                            console.log(totalSales[0]);                   
+                            const itemMenu = order.itemMenus;
+                            for (var itemName in itemMenu) {
+                                var amount = itemMenu[itemName];                            
+                                switch(itemName){
+                                case "mangoStickyRice":                                
+                                    if(mangoStickyRiceTotalArray[i]==undefined){
+                                        mangoStickyRiceTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        mangoStickyRiceTotalArray[i] += amount;                                                
+                                    }                                                                                                                                           
+                                    break;
+                                case "sisigAlaCarte":
+                                    if(sisigAlaCarteTotalArray[i]==undefined){
+                                        sisigAlaCarteTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        sisigAlaCarteTotalArray[i] += amount;                                                  
+                                    }                                        
+                                    break;
+                                case "bakedSisigAlaCarte":
+                                    if(bakedSisigAlaCarteTotalArray[i]==undefined){
+                                        bakedSisigAlaCarteTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        bakedSisigAlaCarteTotalArray[i] += amount;                                                  
+                                    }
+                                    break;
+                                case "mangoStickyRiceParty":
+                                    if(mangoStickyRicePartyTotalArray[i]==undefined){
+                                        mangoStickyRicePartyTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        mangoStickyRicePartyTotalArray[i] += amount;                                                  
+                                    }
+                                    break;
+                                case "sisigAlaCarteParty":
+                                    if(sisigAlaCartePartyTotalArray[i]==undefined){
+                                        sisigAlaCartePartyTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        sisigAlaCartePartyTotalArray[i] += amount;                                                  
+                                    }
+                                    break;
+                                case "bakedSisigParty":
+                                    if(bakedSisigPartyTotalArray[i]==undefined){
+                                        bakedSisigPartyTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        bakedSisigPartyTotalArray[i] += amount;                                                  
+                                    }
+                                    break;
+                                case "bundleA":
+                                    if(bundleATotalArray[i]==undefined){
+                                        bundleATotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        bundleATotalArray[i] += amount;                                                  
+                                    }
+                                    break;
+                                case "bundleB":
+                                    if(bundleBTotalArray[i]==undefined){
+                                        bundleBTotalArray[i] = amount;                                            
+                                    }
+                                    else{
+                                        bundleBTotalArray[i] += amount;                                                  
+                                    }
+                                    break;      
+                                }
+                            }                         
+                        }                       
+                    }
+                }
+                for(let i =0; i<dateArray.length;i++){
+                    if(mangoStickyRiceTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Mango Sticky Rice" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ mangoStickyRiceTotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus);  
+                    }
+                    if(sisigAlaCarteTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Sisig Ala Carte" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ sisigAlaCarteTotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus);   
+                    }           
+                    if(bakedSisigAlaCarteTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Baked Sisig Ala Carte" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ bakedSisigAlaCarteTotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus); 
+                    }        
+                    if(mangoStickyRicePartyTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Mango Sticky Rice Party" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ mangoStickyRicePartyTotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus); 
+                    }        
+                    if(sisigAlaCartePartyTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Sisig Ala Carte Party" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ sisigAlaCartePartyTotalArray[i] +'</td>\
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus); 
+                    }        
+                    if(bakedSisigPartyTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Baked Sisig Party" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ bakedSisigPartyTotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus);
+                    }
+                    if(bundleATotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Bundle A" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ bundleATotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus);      
+                    }
+                    if(bundleBTotalArray[i] != undefined){
+                        saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ "Bundle B" +'</td>\
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ bundleBTotalArray[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('header').insertAdjacentHTML('afterend', saleStatus);  
+                    }
+                                                        
+                    saleStatus = '\
+                            <tr id="orders-customer">\
+                                \
+                                <td>'+ dateArray[i] +'</td>\
+                                <td>'+ totalSales[i] +'</td>\
+                                \
+                                \
+                            </tr>\
+                            ';   
+                            document.getElementById('headerTotalSales').insertAdjacentHTML('afterend', saleStatus);           
+                }
+            });
+
+    logOut.addEventListener('click', (e) => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            alert('User logged out.');
+            window.location.replace("login.html");
+        }).catch((error) => {
+            // An error happened.
+        });
+    })
+</script>
+</html>
