@@ -30,14 +30,23 @@
         <img class="profileImg" src="images\user-profile.jpg">
     
         <div class="detailsContainer">
-            <div class="userName">
-                Name
+            <div class="userName" id="userName">
+                <p id="userName">
+                    Name
+                </p>
+                
             </div>
             <div class="userNo">
-                Contact Number
+               
+                <p id="userNo">
+                    Contact Number
+                </p>
             </div>
             <div class="userAddress">
-                Home Address
+                <p id="userAddress">
+                    Home Address
+                </p>
+                
             </div>
         </div>
     
@@ -51,4 +60,65 @@
     
  
 </body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, ref, set , child, push, update, get} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyBqyyKsQ3Wk6reiLm8k9qBAuz59cZk3PbU",
+    authDomain: "cpecaps-project.firebaseapp.com",
+    databaseURL: "https://cpecaps-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cpecaps-project",
+    storageBucket: "cpecaps-project.appspot.com",
+    messagingSenderId: "1002343899498",
+    appId: "1:1002343899498:web:125ea29ca0d15d98090513",
+    measurementId: "G-0XXL384QBN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const db = getDatabase();
+
+    onAuthStateChanged(auth, (user) =>{
+        if (user){
+            get(ref(database, 'customerUsers/' + user.uid)).then((snapshot)=>{
+        
+                let name = '';
+                snapshot.forEach(user_info =>{
+                    if(user_info.key == "firstname"){
+                        name = user_info.val() + ' ';
+                    }
+                    else if(user_info.key == "surname"){
+                        name = name + user_info.val();
+                        console.log(name);
+                        document.getElementById("userName").textContent = name;
+                        name='';
+                    }
+
+                    else if(user_info.key == "address"){
+                        document.getElementById("userAddress").textContent = user_info.val();
+                        console.log(user_info.val());
+                    }
+                    else if(user_info.key == "contactNo"){
+                        document.getElementById("userNo").textContent = user_info.val();
+                        
+                    }
+                });
+            });
+        }
+    });
+
+    
+
+
+
+</script>
 </html>

@@ -477,10 +477,19 @@ input[type="radio"] {
 
  .userAddress{
     position: absolute;
+    display: inline-block;
+    /* width: auto; */
     width: 389px;
     height: 60px;
     left: 482px;
     top: 380px;
+
+    overflow-x: scroll;
+    /* overflow-y: hidden; */
+    /* overflow: hidden; */
+    white-space: nowrap;
+
+    padding: 5px;
 
     background: #D9D9D9;
     border-radius: 10px;
@@ -495,6 +504,21 @@ input[type="radio"] {
     color: #000000; 
 
  }
+
+.userAddress::-webkit-scrollbar{
+    width: 5px;
+    height: 10px;
+}
+.userAddress::-webkit-scrollbar{
+    background-color: transparent;
+}
+
+.userAddress::-webkit-scrollbar-thumb {
+    background-color: darkgrey;   
+    border-radius: 20px;      
+    border: 1px solid transparent;  
+    
+  }
  
  .bottomBorderProfile{
     position: absolute;
