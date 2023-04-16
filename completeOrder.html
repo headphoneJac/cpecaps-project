@@ -114,7 +114,9 @@
                         date: currentDate,
                         time: currentTime,
                         modeOfPayment: selectedPayment.value,
-                        modeOfOrderTransportation: selectedOrderTransportation.value
+                        modeOfOrderTransportation: selectedOrderTransportation.value,
+                        orderStatus: "Not Paid",
+                        deliveryStatus: "Not Delivered"
                     })
                     get(ref(database, 'customerUsers/' + user.uid + '/itemMenus/'), {onlyOnce:true})
                     .then((snapshot)=>{
