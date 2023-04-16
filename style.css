@@ -69,6 +69,8 @@ img{
     left: 10px;
     top: 15px;
 
+    display: inline;
+
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
