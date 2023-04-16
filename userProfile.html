@@ -31,23 +31,31 @@
     
         <div class="detailsContainer">
             <div class="userName" id="userName">
-                <p id="userName">
+                <p>
                     Name
-                </p>
-                
+                </p>      
             </div>
-            <div class="userNo">
+            <input class="editFirstName" type="text" placeholder="Input new first name" id="editFirstName">
+            <input class="editSurname" type="text" placeholder="Input new surname" id="editSurname">
+
+            <div class="userNo" id="userNo">
                
-                <p id="userNo">
+                <p>
                     Contact Number
                 </p>
             </div>
-            <div class="userAddress">
-                <p id="userAddress">
+
+            <input class="editUserno" type="text" placeholder="Input new contact number" id="editUserno">
+            <div class="userAddress" id="userAddress">
+                <p>
                     Home Address
                 </p>
                 
             </div>
+            <input class="editUseraddress" type="text" placeholder="Input new address" id="editUseraddress">
+            
+
+            
         </div>
     
         <div class="bottomBorderProfile">  
@@ -103,7 +111,7 @@
                     }
                     else if(user_info.key == "surname"){
                         name = name + user_info.val();
-                        console.log(name);
+                        
                         document.getElementById("userName").textContent = name;
                         name='';
                     }
@@ -123,16 +131,122 @@
 
     let edit = document.getElementById("editBtn");
     let save = document.getElementById("saveBtn");
+    
+    let init_name = document.getElementById("userName");
+    let init_no = document.getElementById("userNo");
+    let init_address= document.getElementById("userAddress");
+
+    let edit_first_name = document.getElementById("editFirstName");
+    let edit_surname = document.getElementById("editSurname");
+
+    let edit_no = document.getElementById("editUserno");
+    let edit_address = document.getElementById("editUseraddress");
+
 
    
     edit.addEventListener('click', function(e){
         edit.style.visibility = 'hidden';
         save.style.visibility = 'visible';
+
+        init_name.style.visibility = 'hidden';
+        init_no.style.visibility = 'hidden';
+        init_address.style.visibility = 'hidden';
+
+        edit_first_name.style.visibility = 'visible';
+        edit_surname.style.visibility = 'visible';
+        edit_no.style.visibility = 'visible';
+        edit_address.style.visibility = 'visible';
+
+        
+
+
     });
 
     save.addEventListener('click', function(e){
+        
+
         edit.style.visibility = 'visible';
         save.style.visibility = 'hidden';
+
+        init_name.style.visibility = 'visible';
+        init_no.style.visibility = 'visible';
+        init_address.style.visibility = 'visible';
+
+        edit_first_name.style.visibility = 'hidden';
+        edit_surname.style.visibility = 'hidden';
+        edit_no.style.visibility = 'hidden';
+        edit_address.style.visibility = 'hidden';
+
+        let new_first_name = edit_first_name.value;
+        let new_surname = edit_surname.value;
+        let new_no = edit_no.value;
+        let new_address = edit_address.value;
+        
+        onAuthStateChanged(auth, (user) =>{
+            if(user){
+                if(new_first_name != ' ' && new_first_name != ''){
+                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        firstname: new_first_name
+                    });
+                    edit_first_name.value = '';
+                }
+
+                if(new_surname != ' ' && new_surname != ''){
+                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        surname: new_surname
+                    });
+                    edit_surname.value = '';
+                }
+
+                if(new_no != ' ' && new_no != ''){
+                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        contactNo: new_no
+                    });
+                    edit_no.value = '';
+
+                }
+
+                if(new_address != ' ' && new_address != ''){
+                    update(ref(database, 'customerUsers/' + user.uid), {                        
+                        address: new_address
+                    });
+                    edit_address.value = '';
+                }
+
+                displayNewProfile(user);
+
+                
+            }
+        });
     });
+
+    function displayNewProfile(user){
+        get(ref(database, 'customerUsers/' + user.uid)).then((snapshot)=>{
+        
+        let name = '';
+        snapshot.forEach(user_info =>{
+            if(user_info.key == "firstname"){
+                name = user_info.val() + ' ';
+            }
+            else if(user_info.key == "surname"){
+                name = name + user_info.val();
+                
+                document.getElementById("userName").textContent = name;
+                name='';
+            }
+
+            else if(user_info.key == "address"){
+                document.getElementById("userAddress").textContent = user_info.val();
+                console.log(user_info.val());
+            }
+            else if(user_info.key == "contactNo"){
+                document.getElementById("userNo").textContent = user_info.val();
+                
+            }
+        });
+    });
+    }
+
+
 </script>
 </html>

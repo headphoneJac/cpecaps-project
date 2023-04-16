@@ -443,6 +443,7 @@ input[type="radio"] {
 
     background: #D9D9D9;
     border-radius: 10px;
+    visibility: visible;
 
     font-family: 'Roboto';
     font-style: normal;
@@ -453,6 +454,51 @@ input[type="radio"] {
 
     color: #000000;
  }
+
+ .editFirstName{
+    
+    position: absolute;
+    max-width: 389px;
+    height: 60px;
+    left: 482px;
+    top: 170px;
+
+    background: #D9D9D9;
+    border-radius: 10px;
+    visibility: hidden;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000;
+ }
+
+ .editSurname{
+    
+    position: absolute;
+    max-width: 389px;
+    height: 60px;
+    left: 900px;
+    top: 170px;
+
+    background: #D9D9D9;
+    border-radius: 10px;
+    visibility: hidden;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000;
+ }
+ 
 
  .userNo{
     position: absolute;
@@ -463,6 +509,7 @@ input[type="radio"] {
 
     background: #D9D9D9;
     border-radius: 10px;
+    visibility: visible;
 
     font-family: 'Roboto';
     font-style: normal;
@@ -475,6 +522,26 @@ input[type="radio"] {
 
  }
 
+ .editUserno{
+    position: absolute;
+    max-width: 389px;
+    height: 60px;
+    left: 482px;
+    top: 271px;
+    visibility: visible;
+    background: #D9D9D9;
+    border-radius: 10px;
+    visibility: hidden;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000;
+ }
  .userAddress{
     position: absolute;
     display: inline-block;
@@ -483,7 +550,7 @@ input[type="radio"] {
     height: 60px;
     left: 482px;
     top: 380px;
-
+    visibility: visible;
     overflow-x: scroll;
     /* overflow-y: hidden; */
     /* overflow: hidden; */
@@ -503,6 +570,29 @@ input[type="radio"] {
 
     color: #000000; 
 
+ }
+
+ .editUseraddress{
+    position: absolute;
+    
+    max-width: 389px;
+    height: 60px;
+    left: 482px;
+    top: 372px;
+
+    visibility: hidden;
+
+    background: #D9D9D9;
+    border-radius: 10px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+
+    color: #000000; 
  }
 
 .userAddress::-webkit-scrollbar{
