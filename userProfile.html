@@ -52,8 +52,13 @@
     
         <div class="bottomBorderProfile">  
         </div>
-        <button class="editProfile">
+        
+        <button class="editProfile" id="editBtn">
             Edit Profile
+        </button>
+
+        <button class="saveProfile" id="saveBtn">
+            Save
         </button>
 
     </div>
@@ -116,9 +121,18 @@
         }
     });
 
-    
+    let edit = document.getElementById("editBtn");
+    let save = document.getElementById("saveBtn");
 
+   
+    edit.addEventListener('click', function(e){
+        edit.style.visibility = 'hidden';
+        save.style.visibility = 'visible';
+    });
 
-
+    save.addEventListener('click', function(e){
+        edit.style.visibility = 'visible';
+        save.style.visibility = 'hidden';
+    });
 </script>
 </html>
