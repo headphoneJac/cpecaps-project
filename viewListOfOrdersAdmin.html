@@ -103,23 +103,37 @@
 
                 document.getElementById('orders-customer').insertAdjacentHTML('beforeend', orders);
                 
-                function onChange() {
-                    orderStatus = document.getElementById('select-order-status ' + UID);
-                    deliveryStatus = document.getElementById('select-delivery-status ' + UID);
 
+                //Order
+                document.getElementById('select-order-status ' + UID).addEventListener("change", function() {
+                    orderStatus = document.getElementById('select-order-status ' + UID);
                     update(ref(database, 'orders/' + UID), {
-                        orderStatus: orderStatus.value,
+                        orderStatus: orderStatus.value
+                    })
+                });
+
+                get(ref(database, 'orders/' + UID + '/orderStatus')).then((snapshot)=>{
+                    document.getElementById('select-order-status ' + UID).value = snapshot.val();
+    
+                });
+
+                //Delivery
+                document.getElementById('select-delivery-status ' + UID).addEventListener("change", function() {
+                    deliveryStatus = document.getElementById('select-delivery-status ' + UID);
+                    update(ref(database, 'orders/' + UID), {
                         deliveryStatus: deliveryStatus.value
                     })
+                });
 
-                    orderStatus.onchange = onChange;
-                    deliveryStatus.onchange = onChange;
-                }
-
-                onChange();
-            })
+                get(ref(database, 'orders/' + UID + '/deliveryStatus')).then((snapshot)=>{
+                    document.getElementById('select-delivery-status ' + UID).value = snapshot.val();
+                });
+                
+            });
         })
     })
+
+
 
     logOut.addEventListener('click', (e) => {
         signOut(auth).then(() => {
