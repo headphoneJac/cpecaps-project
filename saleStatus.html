@@ -103,69 +103,85 @@
                             for (var itemName in itemMenu) {
                                 var amount = itemMenu[itemName];                            
                                 switch(itemName){
-                                case "mangoStickyRice":                                
+                                case "mangoStickyRice": 
+                                if(amount != 0){
                                     if(mangoStickyRiceTotalArray[i]==undefined){
                                         mangoStickyRiceTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         mangoStickyRiceTotalArray[i] += amount;                                                
-                                    }                                                                                                                                           
+                                    }   
+                                }                                                                                                                                                                                                        
                                     break;
                                 case "sisigAlaCarte":
+                                if(amount != 0){
                                     if(sisigAlaCarteTotalArray[i]==undefined){
                                         sisigAlaCarteTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         sisigAlaCarteTotalArray[i] += amount;                                                  
-                                    }                                        
+                                    }
+                                }                                                                            
                                     break;
                                 case "bakedSisigAlaCarte":
+                                if(amount != 0){
                                     if(bakedSisigAlaCarteTotalArray[i]==undefined){
                                         bakedSisigAlaCarteTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         bakedSisigAlaCarteTotalArray[i] += amount;                                                  
                                     }
+                                }                                    
                                     break;
                                 case "mangoStickyRiceParty":
+                                if(amount != 0){
                                     if(mangoStickyRicePartyTotalArray[i]==undefined){
                                         mangoStickyRicePartyTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         mangoStickyRicePartyTotalArray[i] += amount;                                                  
                                     }
+                                }                                   
                                     break;
                                 case "sisigAlaCarteParty":
+                                if(amount != 0){
                                     if(sisigAlaCartePartyTotalArray[i]==undefined){
                                         sisigAlaCartePartyTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         sisigAlaCartePartyTotalArray[i] += amount;                                                  
                                     }
+                                }                                    
                                     break;
                                 case "bakedSisigParty":
+                                if(amount != 0){
                                     if(bakedSisigPartyTotalArray[i]==undefined){
                                         bakedSisigPartyTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         bakedSisigPartyTotalArray[i] += amount;                                                  
                                     }
+                                }                                    
                                     break;
                                 case "bundleA":
+                                if(amount != 0){
                                     if(bundleATotalArray[i]==undefined){
                                         bundleATotalArray[i] = amount;                                            
                                     }
                                     else{
                                         bundleATotalArray[i] += amount;                                                  
                                     }
+                                }                                    
                                     break;
                                 case "bundleB":
+                                if(amount != 0){
                                     if(bundleBTotalArray[i]==undefined){
                                         bundleBTotalArray[i] = amount;                                            
                                     }
                                     else{
                                         bundleBTotalArray[i] += amount;                                                  
                                     }
+                                }                                   
                                     break;      
                                 }
                             }                         
