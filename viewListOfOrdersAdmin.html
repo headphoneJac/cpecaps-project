@@ -59,28 +59,39 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     const auth = getAuth();
-    var UID, customerDetails;
-    let orders = '';
+    var UID, customerDetails, customerInfo;
+    let info, orders = '';
 
     get(ref(database, 'orders/'))
     .then((snapshot)=> {
         snapshot.forEach(UID => {
             UID = UID.key;
 
+            get(ref(database, 'customerUsers/' + UID))
+            .then((snapshotChild) => {
+                customerInfo = snapshotChild.val();
+
+                console.log(customerInfo);
+
+                info = '\
+                <tr id="orders-customer">\
+                    <td>'+ customerInfo.surname +'</td>\
+                ';
+
+                document.getElementById('header').insertAdjacentHTML('afterend', info);
+            })
+
             get(ref(database, 'orders/' + UID))
             .then((snapshotChild)=> {
                 customerDetails = snapshotChild.val();
 
-                console.log(UID.length);
                 console.log(customerDetails);
                 
                 orders = '\
-                <tr id="orders-customer">\
-                    <td> Surname </td>\
                     <td>'+ customerDetails.modeOfPayment +'</td>\
                     <td>'+ customerDetails.date +'</td>\
                     <td>'+ customerDetails.time +'</td>\
-                    <td>'+ customerDetails.totalPrice +'</td>\
+                    <td>'+ customerDetails.totalPrice.toFixed(2) +'</td>\
                     <td><select name="select-order-status" id="select-order-status">\
                         <option value="Not Paid">Not Paid</option>\
                         <option value="Paid">Paid</option>\
@@ -96,7 +107,7 @@
                 </tr>\
                 ';
 
-                document.getElementById('header').insertAdjacentHTML('afterend', orders);
+                document.getElementById('orders-customer').insertAdjacentHTML('beforeend', orders);
             })
 
         })
