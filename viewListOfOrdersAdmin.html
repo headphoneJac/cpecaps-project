@@ -86,13 +86,13 @@
                     <td>'+ customerDetails.date +'</td>\
                     <td>'+ customerDetails.time +'</td>\
                     <td>'+ customerDetails.totalPrice.toFixed(2) +'</td>\
-                    <td><form><select name="select-order-status" id="select-order-status'+UID+'">\
+                    <td><form><select name="select-order-status" id="select-order-status '+ UID +'">\
                         <option value="Not Paid">Not Paid</option>\
                         <option value="Paid">Paid</option>\
                         <option value="Cancelled">Cancelled</option>\
                         </select></form>\
                     </td>\
-                    <td><form><select name="select-delivery-status" id="select-delivery-status">\
+                    <td><form><select name="select-delivery-status" id="select-delivery-status '+ UID +'">\
                         <option value="Not Delivered">Not Delivered</option>\
                         <option value="Delivered">Delivered</option>\
                         <option value="Cancelled">Cancelled</option>\
@@ -103,14 +103,19 @@
 
                 document.getElementById('orders-customer').insertAdjacentHTML('beforeend', orders);
                 
-                orderStatus = document.getElementById('select-order-status'+UID);
                 function onChange() {
+                    orderStatus = document.getElementById('select-order-status ' + UID);
+                    deliveryStatus = document.getElementById('select-delivery-status ' + UID);
+
                     update(ref(database, 'orders/' + UID), {
-                        orderStatus: orderStatus.value
+                        orderStatus: orderStatus.value,
+                        deliveryStatus: deliveryStatus.value
                     })
+
+                    orderStatus.onchange = onChange;
+                    deliveryStatus.onchange = onChange;
                 }
 
-                orderStatus.onchange = onChange;
                 onChange();
             })
         })
