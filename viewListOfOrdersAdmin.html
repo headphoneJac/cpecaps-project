@@ -36,7 +36,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
     import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
-    import { getDatabase, get, ref } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getDatabase, get, ref, update } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -57,7 +57,7 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     const auth = getAuth();
-    var UID, customerDetails, customerInfo;
+    var UID, customerDetails, customerInfo, orderStatus, deliveryStatus;
     let info, orders = '';
 
     get(ref(database, 'orders/'))
@@ -68,8 +68,6 @@
             get(ref(database, 'customerUsers/' + UID))
             .then((snapshotChild) => {
                 customerInfo = snapshotChild.val();
-
-                console.log(customerInfo);
 
                 info = '\
                 <tr id="orders-customer">\
@@ -82,32 +80,39 @@
             get(ref(database, 'orders/' + UID))
             .then((snapshotChild)=> {
                 customerDetails = snapshotChild.val();
-
-                console.log(customerDetails);
                 
                 orders = '\
                     <td>'+ customerDetails.modeOfPayment +'</td>\
                     <td>'+ customerDetails.date +'</td>\
                     <td>'+ customerDetails.time +'</td>\
                     <td>'+ customerDetails.totalPrice.toFixed(2) +'</td>\
-                    <td><select name="select-order-status" id="select-order-status">\
+                    <td><form><select name="select-order-status" id="select-order-status'+UID+'">\
                         <option value="Not Paid">Not Paid</option>\
                         <option value="Paid">Paid</option>\
                         <option value="Cancelled">Cancelled</option>\
-                        </select>\
+                        </select></form>\
                     </td>\
-                    <td><select name="select-delivery-status" id="select-delivery-status">\
+                    <td><form><select name="select-delivery-status" id="select-delivery-status">\
                         <option value="Not Delivered">Not Delivered</option>\
                         <option value="Delivered">Delivered</option>\
                         <option value="Cancelled">Cancelled</option>\
-                        </select>\
+                        </select></form>\
                     </td>\
                 </tr>\
                 ';
 
                 document.getElementById('orders-customer').insertAdjacentHTML('beforeend', orders);
-            })
+                
+                orderStatus = document.getElementById('select-order-status'+UID);
+                function onChange() {
+                    update(ref(database, 'orders/' + UID), {
+                        orderStatus: orderStatus.value
+                    })
+                }
 
+                orderStatus.onchange = onChange;
+                onChange();
+            })
         })
     })
 
