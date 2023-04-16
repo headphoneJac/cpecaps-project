@@ -186,26 +186,29 @@
                         icon: "success",
                     });
                 }
-
-                update(ref(database,  'customerUsers/' + user.uid + '/itemMenus'), {
-                    bakedSisigAlaCarte: 0,
-                    bakedSisigParty: 0,
-                    bundleA: 0,
-                    bundleB: 0,
-                    mangoStickyRice: 0,
-                    mangoStickyRiceParty: 0,
-                    sisigAlaCarte: 0,
-                    sisigAlaCarteParty: 0
-                    
-                })
-
-                update(ref(database,  'customerUsers/' + user.uid), {
-                    totalPrice : 0
-                })
             }
-        })
-       //document.querySelector('form').addEventListener('completeOrder', function(event) {
+            get(ref(database, 'orders/' + user.uid))
+            .then((snapshot)=>{
+                if(snapshot.exists()) {
+                    update(ref(database,  'customerUsers/' + user.uid + '/itemMenus'), {
+                        bakedSisigAlaCarte: 0,
+                        bakedSisigParty: 0,
+                        bundleA: 0,
+                        bundleB: 0,
+                        mangoStickyRice: 0,
+                        mangoStickyRiceParty: 0,
+                        sisigAlaCarte: 0,
+                        sisigAlaCarteParty: 0
+                        
+                    })
 
+                    update(ref(database,  'customerUsers/' + user.uid), {
+                        totalPrice : 0
+                    })
+                }
+            })
+        })
+        //document.querySelector('form').addEventListener('completeOrder', function(event) {
     });
 </script>
 
