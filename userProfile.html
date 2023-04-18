@@ -250,6 +250,15 @@
     });
     }
 
+    logOut.addEventListener('click', (e) => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            alert('User logged out.');
+            window.location.replace("login.html");
+        }).catch((error) => {
+            // An error happened.
+        });
+    })
 
 </script>
 </html>
